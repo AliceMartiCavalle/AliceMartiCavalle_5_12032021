@@ -1,6 +1,10 @@
 1. Les fichiers peluchesTEST.html et panier.js permettent de fabriquer 
 un tableau avec 7 cases contenant des strings (dont ID, name, price, description, img) : 
     - Est-ce que c'est bien ça qui est attendu ?
+    - Tout fonctionnait mais maintenant j'ai une erreur avec cette fonction pour mettre l'img sur local storage :
+Uncaught DOMException: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.
+    at getBase64Image (file:///C:/Users/hp/Desktop/Openclassroom/p5_12-03-2021/panier.js:145:26)
+    at file:///C:/Users/hp/Desktop/Openclassroom/p5_12-03-2021/panier.js:151:15
 
 
 2. Les fichiers formulaire_V2.html et formulaire_V2.js permettent de fabriquer
