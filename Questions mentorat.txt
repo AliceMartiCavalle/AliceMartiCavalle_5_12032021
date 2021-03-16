@@ -1,0 +1,30 @@
+1. Les fichiers peluchesTEST.html et panier.js permettent de fabriquer 
+un tableau avec 7 cases contenant des strings (dont ID, name, price, description, img) : 
+    - Est-ce que c'est bien ça qui est attendu ?
+
+
+2. Les fichiers formulaire_V2.html et formulaire_V2.js permettent de fabriquer
+un objet contact contenant 5 champs : firstName, lastName, address, city et email
++ j'ai créé un tableau product de test pour que la requête corresponde au format demandé :
+/**
+ * Expects request to contain:
+ * contact: {
+ *   firstName: string,
+ *   lastName: string,
+ *   address: string,
+ *   city: string,
+ *   email: string
+ * }
+ * products: [string] <-- array of product _id
+ */
+    - Pourquoi j'arrive pas à l'envoyer à l'api ni avec XMLHttpRequest ni avec fetch ?
+
+
+3. Les fichiers peluches.html et GETcard.js :
+en fonction du clic de l'utilisateur, importe la carte de peluche correspondante avec XMLHttpRequest
+    - Est-ce que c'est ça qui est demandé dans cette ligne de la consigne : 
+"une page “produit”, qui affiche de manière dynamique l'élément sélectionné par l'utilisateur"
+    - L'import des cartes de peluches fonctionnait mais maintenant j'ai une erreur : 
+Access to XMLHttpRequest at 'file:///C:/Users/hp/Desktop/Openclassroom/P5/albert.html' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, chrome-untrusted, https.
+    - Comment je fais pour que le panier.js fonctionne ici ?
+J'ai essayé de le laisser sur la page de la peluche, de le mettre sur la page peluches.html, de faire les deux, rien à faire
