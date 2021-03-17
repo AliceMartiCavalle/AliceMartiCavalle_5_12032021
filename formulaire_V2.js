@@ -1,6 +1,144 @@
 // localStorage.clear();
 
-// formulaire de contact
+//// RESUME COMMANDE
+
+//!clear local storage une fois que tout est fait
+
+let choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
+console.log(choixNounoursTab);
+
+// let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
+// console.log(retrievedChoixNounours);
+
+//* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours.js
+let prixUniteTab = [];
+//* On parcourt le tableau avec les nounours
+for (let i = 0; i < choixNounoursTab.length; i++) {
+    //* On récupère le prix, la quantité de chaque nounours
+    console.log(i);
+    let prix = choixNounoursTab[i][4];
+    console.log(prix);
+    let quantite = choixNounoursTab[i][1];
+    console.log(quantite);
+    //* On calcule le prix unitaire de chaque nounours et on le stock dans prixUniteTab
+    let prixUnite = parseInt(prix) / parseInt(quantite);
+    console.log(prixUnite);
+    prixUniteTab.push(prixUnite);
+    console.log(prixUniteTab);
+}
+console.log(prixUniteTab);
+
+let commandeTab = []; //pour delete qd click bin
+
+let commandeAll = document.getElementById('commandeAll');
+//* On ajoute des lignes de commandes en foncton du nombre de nounours
+for (let i = 0; i < choixNounoursTab.length; i++) {
+    //* nouvelle ligne de commande
+    let newCommande = document.createElement("div");
+    newCommande.innerHTML = "<div><img /></div><div>nom</div><div>prix</div><div>couleur</div><div>supr</div>";
+    newCommande.setAttribute("class", "commande row border-bottom border-primary")
+    
+    //* On sélectionne tous les éléments de la ligne et on remplit un par un
+    let newCommandeDiv = newCommande.querySelectorAll('div');
+    
+    //* img
+    let newCommandeImgDiv = newCommandeDiv[0];
+    newCommandeImgDiv.setAttribute("class", "col-2");
+    let newCommandeImg = newCommandeImgDiv.querySelector("img");
+    // console.log(newCommandeImg);
+    newCommandeImg.setAttribute("src", choixNounoursTab[i][6]);
+    newCommandeImg.setAttribute("class", "imgCommande");
+    console.log(newCommandeImgDiv);
+    
+    //* nom
+    let newCommandeNom = newCommandeDiv[1];
+    newCommandeNom.setAttribute("class", "col-3 d-flex align-items-center");
+    newCommandeNom.innerHTML = `<strong>Nom : &nbsp;</strong>${choixNounoursTab[i][3]}`;
+    console.log(newCommandeNom);
+    
+    //* prix
+    console.log(prixUniteTab);
+    let newCommandePrix = newCommandeDiv[2];
+    newCommandePrix.setAttribute("class", "col-3 d-flex align-items-center");
+    newCommandePrix.innerHTML = `<strong>Prix : &nbsp;</strong>${choixNounoursTab[i][1]} x ${prixUniteTab[i]}€ = ${choixNounoursTab[i][4]}`;
+    console.log(newCommandePrix);
+   
+    //* couleur
+    let newCommandeCouleur = newCommandeDiv[3];
+    newCommandeCouleur.setAttribute("class", "col-3 d-flex align-items-center");
+    newCommandeCouleur.innerHTML = `<strong>Couleur : &nbsp;</strong>${choixNounoursTab[i][0]}`;
+    console.log(newCommandeCouleur);
+   
+    //* icone poubelle
+    let newCommandeIcon = newCommandeDiv[4];
+    newCommandeIcon.setAttribute("class", "col-1 d-flex align-items-center bin");
+    newCommandeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg>`;
+    
+    commandeAll.appendChild(newCommande);
+
+    commandeTab.push(newCommande); // pour bin
+}
+console.log(commandeTab);
+
+//* On calcule le prix
+let totalDiv = document.getElementById('total');
+let total = 0;
+//* on parcourt le tableau de nounours pour récup prix / quantité de chaque nounours
+for (let i = 0; i < choixNounoursTab.length; i++) {
+    let prix = choixNounoursTab[i][4];
+    console.log(prix);
+    // let quantite = choixNounoursTab[i][1];
+    // console.log(quantite);
+    //* on multiplie et on ajoute à chaque tour
+    total += parseInt(prix);
+    console.log(total);
+}
+console.log(total);
+//* Et on affiche pour utilisateur
+totalDiv.innerHTML = `<strong>Total : </strong>${total}€`;
+
+//* On retarde cette partie jusqu'à ce que les lignes de commande existent
+setTimeout(() => {
+    //* On repère les bins dans html
+    let binAll = document.querySelectorAll(".bin")
+    // let bin = [];
+    console.log(binAll);
+    //* On parcourt les lignes de commandes (1 commande / case du tableau choixNounoursTab)
+    for (let i = 0; i < choixNounoursTab.length; i++) {
+        //* on capture toutes les bins dans un tableau
+        // bin.push(newCommandeIconAll[i]); 
+        // console.log(bin[i]);
+        console.log(binAll[i]);
+        // console.log(total);
+        // console.log(prixUniteTab);
+        //* Pour chaque bin, on efface la ligne qui lui correspond au click
+        binAll[i].addEventListener('click', function() {
+            console.log(binAll[i]);
+            console.log(commandeTab[i]);
+            commandeTab[i].remove();
+            //* On ajuste le calcul du total et on l'affiche à l'utilisateur
+            let prix = choixNounoursTab[i][4];
+            console.log(parseInt(prix));
+            total -= parseInt(prix);
+            totalDiv.innerHTML = `<strong>Total : </strong>${total}€`; //wow, ça fonctionne, ce truc de ouf
+        });
+    }
+    // console.log(bin);
+}, 1000);
+
+//// FORMULAIRE DE CONTACT
+/**
+ * Expects request to contain:
+ * contact: {
+ *   firstName: string,
+ *   lastName: string,
+ *   address: string,
+ *   city: string,
+ *   email: string
+ * }
+ * products: [string] <-- array of product _id
+ */
+
 //! annuler comportement par défaut pour que la page se recharge pas
 $("#valider").click(function(e) { 
     e.preventDefault();
@@ -22,29 +160,39 @@ let contact = new FormData();
 
 valider.addEventListener('click', function() {
 
-    contact.append('lastName', lastNameInput.value);
     contact.append('firstName', firstNameInput.value);
+    contact.append('lastName', lastNameInput.value);
     contact.append('address', addressInput.value);
     contact.append('city', cityInput.value);
     contact.append('email', emailInput.value);
     
     //parcourt l'objet
     for (let pair of contact.entries()) {
-        console.log(pair[0] + ' _ ' + pair[1]);
-    }
-    //parcourt l'objet et transforme le contenu en texte
-    for (let pair of contact.entries()) {
-        console.log(JSON.stringify(pair[0] + ' _ ' + pair[1]));
+        console.log(pair[0] + ' : ' + pair[1]);
     }
 
+    //parcourt l'objet et transforme le contenu en texte
+    // for (let pair of contact.entries()) {
+    //     console.log(JSON.stringify(pair[0] + ' _ ' + pair[1]));
+    // }
+
     // tableau produits test
-    let products = ["id", "name", "25€", "description", "img"];
+    // let products = ["id", "name", "25€", "description", "img"];
+    let products = [choixNounoursTab, total];
+    console.log(products);
+    console.log(JSON.stringify(products));
+    
+    //! J'ai essayé d'envoyer contact et procucts dans un objet, dans un array, 
+    //! dans un objet lui-même dans un array et inversement, 
+    //! que du texte, du texte et un objet, du texte et un array, 
+    //! du texte dans un objet ou un array 
+    //! WHAT THE FUCK TU ME LAISSES L'ACHETER CE NOUNOURS OU BIEN ??
 
     //poster une commande : XML request (tentative 1)
     let requestPOST = new XMLHttpRequest();
     requestPOST.open("POST", "http://localhost:3000/api/teddies/order");
     requestPOST.setRequestHeader("Content-Type", "application/json");
-    requestPOST.send(JSON.stringify(contact), JSON.stringify(products));
+    requestPOST.send(contact, products);
     
     //poster une commande : fetch (tentative 2)
     fetch('http://localhost:3000/api/teddies/order', {
@@ -55,12 +203,12 @@ valider.addEventListener('click', function() {
     //du coup c'est un tableau, qu'est-ce qu'on doit envoyer exactement ?
     //la consigne dit : "Requête JSON contenant un objet de contact et un tableau de produits"
     //donc on le met dans quoi ? un {} ? un [] ??
-    body: [JSON.stringify(contact), JSON.stringify(products)] 
+    body: [contact, products] 
     })
     .then(response => response.json())
     .then(json => console.log(json));
 
-    ////dans les deux cas, message d'erreur : net::ERR_CONNECTION_REFUSED
+    ////dans les deux cas, message d'erreur : 400 bad request
 
 });
 
@@ -70,6 +218,35 @@ valider.addEventListener('click', function() {
 
 
 
+// //* si on a besoin de rajouter des div
+// let commande = document.querySelector('.commande');
+// // document.createElement()
+// // commande.appendChild
+
+// //* On capture toutes les cases de la commande
+// let img = document.querySelector('.commande > div > img');
+// let commandeDiv = document.querySelectorAll('.commande > div');
+// let commandeNom = commandeDiv[1];
+// let commandePrix = commandeDiv[2];
+// //! si utilisateur choisis plusieurs fois le même nounours
+// // let commandeQuantite = commandeDiv[3];
+// let commandeCouleur = commandeDiv[3];
+// let commandeTotal = commandeDiv[4]
+
+
+
+// //* On remplit avec les infos nounours
+// commandeNom.innerHTML = `<strong>Nom : </strong>${retrievedChoixNounours[3]}`;
+// commandePrix.innerHTML = `<strong>Prix : </strong>${retrievedChoixNounours[1]} x ${prixUnite}€ = ${retrievedChoixNounours[4]}`;
+// commandeCouleur.innerHTML = `<strong>Couleur : </strong>${retrievedChoixNounours[0]}`;
+
+//! Si plusieurs nounours, ajouter des lignes de commandes en fonction du nombre de nounours
+//! remplir ici commandeQuantite & CommandeTotal
+// let quantite = 1; //* temporaire : initialisé à un en attendant d'ajouter la fonctionnalité à panier_V2.js
+// commandeQuantite.innerHTML = `<strong>Nombre de commande : </strong>${quantite}`;
+// commandeTotal.innerHTML = `<strong>Total : </strong>${parseInt(quantite) * parseInt(retrievedChoixNounours[4])}€`;
+
+// localStorage.getItem
 
 
 
@@ -110,7 +287,7 @@ valider.addEventListener('click', function() {
 
 // function setUtilisateur() {
 //     // concaténation des # parties du mail
-//     mailEntier = `${mail1.value}@${mail2.value}`;
+    // mailEntier = `//${mail1.value}@${mail2.value}`;
 //     console.log(mailEntier);
 //     //! verif pattern mail ou set pattern dans form (mieux)
     

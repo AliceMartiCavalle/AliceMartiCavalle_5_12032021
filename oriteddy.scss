@@ -25,7 +25,12 @@ footer {
 }
 
 // page produit
-
+#imgNavPeluche {
+    > img {
+        width: 60px;
+        margin-left: 15px;
+    }
+}
 .nav-item {
     cursor : pointer;
 }
@@ -96,4 +101,12 @@ footer {
             opacity: 0;
         }
     }
+}
+
+// PAGE FORM
+.imgCommande {
+    width: 70px;
+}
+.bin:hover {
+    cursor : pointer;
 }

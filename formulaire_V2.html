@@ -11,15 +11,40 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link rel="shortcut icon" href="#"> <!--? why-->
+    <link rel="shortcut icon" href="images/favicon.ico" >
+    <link rel="icon" type="image/gif" href="images/animated_favicon1.gif" >
     <link rel="stylesheet" href="css/oriteddy.css" />
+    <link rel="icon" href="favicon.ico" />
     <title>Formulaire</title>
 </head>
 <body class="mx-3">
     <header class="row d-flex justify-content-between mb-5">
         <h1 class="bg-primary p-2">ORITEDDY</h1>
     </header>
-    <h2>Dites-nous où envoyer votre peluche</h2>
+    <h2 class="mb-5">Résumé de la commande</h2>
+    <div id="commandeAll">
+        <!-- <div class="commande row">
+            <div class="col-2">
+                <img src="images\AlbertPetit.jpg" alt="" class="imgCommande">
+            </div>
+            <div class="col-3">
+                Nom : 
+            </div>
+            <div class="col-3">
+                Prix :
+            </div>
+            <div class="col-3">
+                Couleur : 
+            </div>
+            <div class="col-1">
+                i suppr
+            </div>
+        </div> -->
+    </div>
+    <div class="col-12 text-right pr-5 mt-3" id="total">
+        Total : 
+    </div>
+    <h2 class="mt-5">Dites-nous où envoyer votre peluche</h2>
     <form class="row g-3" id="formUser" name="formUser">
         <div class="col-md-6">
             <label for="lastName" class="form-label">Nom</label>

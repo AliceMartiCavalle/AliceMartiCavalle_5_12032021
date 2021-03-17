@@ -11,6 +11,10 @@ h1 a {
 footer {
   background-color: #DDD; }
 
+#imgNavPeluche > img {
+  width: 60px;
+  margin-left: 15px; }
+
 .nav-item {
   cursor: pointer; }
 
@@ -53,5 +57,11 @@ footer {
       top: 12px;
       right: 20px;
       opacity: 0; }
+
+.imgCommande {
+  width: 70px; }
+
+.bin:hover {
+  cursor: pointer; }
 
 /*# sourceMappingURL=oriteddy.css.map */
