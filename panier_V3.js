@@ -1,3 +1,5 @@
+// localStorage.clear();
+
 //* NAVIGUER D'UNE PELUCHE A L'AUTRE
 
 let btnAutrePeluche = document.getElementById('autrePeluche');
@@ -195,18 +197,19 @@ function panier() {
         //* couleur
         let choixNounours = [];
         console.log(couleur);
+        console.log(options);
         switch (couleur) {
             case 0:
-                choixNounours.push(`${couleur1}`); //choix par défaut
+                choixNounours.push(`${options[0].textContent}`); //choix par défaut
                 break;
             case 1:
-                choixNounours.push(`${couleur2}`);
+                choixNounours.push(`${options[1].textContent}`);
                 break;
             case 2:
-                choixNounours.push(`${couleur3}`);
+                choixNounours.push(`${options[2].textContent}`);
                 break;
             case 3:
-                choixNounours.push(`${couleur4}`);
+                choixNounours.push(`${options[3].textContent}`);
                 break;
             default:
                 console.log('error couleur')
@@ -255,8 +258,20 @@ function panier() {
         total = prix * quantite + "€";
         console.log(total);
 
-        //* on ajoute les autres infos
-        choixNounours.push(pelucheID, pelucheName, total, pelucheDescription, pelucheImg);
+        //* On garde que la partie id
+        let codeProduit = codeProduitTag.textContent;
+        codeProduit = codeProduit.split(' : ');
+        codeProduit = codeProduit[1];
+        console.log(codeProduit);
+        
+        //* Idem pour la description
+        let description = descriptionTag.textContent;
+        description = description.split(' : ');
+        description = description[1];
+        console.log(description);
+        
+        //* on ajoute les autres infos au tableau
+        choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src);
         console.log(choixNounours);
 
         // //* On envoie/récupère les infos nounours sur local storage
