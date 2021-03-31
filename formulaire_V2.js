@@ -10,7 +10,7 @@ console.log(choixNounoursTab);
 // let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
 // console.log(retrievedChoixNounours);
 
-//* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours.js
+//* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours
 let prixUniteTab = [];
 //* On parcourt le tableau avec les nounours
 for (let i = 0; i < choixNounoursTab.length; i++) {
@@ -31,7 +31,7 @@ console.log(prixUniteTab);
 let commandeTab = []; //pour delete qd click bin
 
 let commandeAll = document.getElementById('commandeAll');
-//* On ajoute des lignes de commandes en foncton du nombre de nounours
+//* On ajoute des lignes de commandes en fonction du nombre de nounours
 for (let i = 0; i < choixNounoursTab.length; i++) {
     //* nouvelle ligne de commande
     let newCommande = document.createElement("div");
@@ -128,7 +128,7 @@ setTimeout(() => {
 
 //// FORMULAIRE DE CONTACT
 /**
- * Expects request to contain:
+ * !Expects request to contain:
  * contact: {
  *   firstName: string,
  *   lastName: string,
@@ -139,45 +139,39 @@ setTimeout(() => {
  * products: [string] <-- array of product _id
  */
 
-//! annuler comportement par défaut pour que la page se recharge pas
+//* annuler comportement par défaut pour que la page se recharge pas
 $("#valider").click(function(e) { 
     e.preventDefault();
     // creation.style.border = '1px solid #000';
 });
 
-// ajouter tableau avec données utilisateur
+//* ajouter tableau avec données utilisateur
 let lastNameInput = document.getElementById('lastName');
 let firstNameInput = document.getElementById('firstName');
 let addressInput = document.getElementById('address');
 let cityInput = document.getElementById('city');
 let emailInput = document.getElementById('email');
-// bouton
+//* bouton
 let valider = document.getElementById('valider');
-//form
+//* form
 let formUser = document.getElementById('formUser');
 let contact = new FormData();
-//* si je fais new FormData(formUser) ça ne capture pas le contenu des input
+//? si je fais new FormData(formUser) ça ne capture pas le contenu des input
 
 valider.addEventListener('click', function() {
 
+    //! faire une boucle ici ?
     contact.append('firstName', firstNameInput.value);
     contact.append('lastName', lastNameInput.value);
     contact.append('address', addressInput.value);
     contact.append('city', cityInput.value);
     contact.append('email', emailInput.value);
     
-    //parcourt l'objet
+    //* parcourt l'objet
     for (let pair of contact.entries()) {
         console.log(pair[0] + ' : ' + pair[1]);
     }
 
-    //parcourt l'objet et transforme le contenu en texte
-    // for (let pair of contact.entries()) {
-    //     console.log(JSON.stringify(pair[0] + ' _ ' + pair[1]));
-    // }
-
-    // tableau produits test
-    // let products = ["id", "name", "25€", "description", "img"];
     let products = [choixNounoursTab, total];
     console.log(products);
     console.log(JSON.stringify(products));
@@ -210,6 +204,26 @@ valider.addEventListener('click', function() {
 
     ////dans les deux cas, message d'erreur : 400 bad request
 
+    //poster une commande : fetch (tentative 3)
+    //! erreur de syntaxe quelque part, console dit : Invalid destructuring assignment target 218
+    // const PostCommande = async function(data) {
+    //     let response = await fetch('http://localhost:3000/api/teddies/order'), {
+    //         method: "POST",
+    //         headers : {
+    //         'Content-type': 'application/json'
+    //         },
+    //         body : JSON.stringify(data)
+    //     })
+    //     if (response.ok) {
+    //         let data = await response.json();
+    //         console.log(data);
+    //     } else {
+    //         console.error('response serveur', response.status);
+    //     }
+    // }
+    // PostCommande(contact, products);
+
+
 });
 
 
@@ -217,6 +231,17 @@ valider.addEventListener('click', function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+//! BROUILLONS
 
 // //* si on a besoin de rajouter des div
 // let commande = document.querySelector('.commande');
