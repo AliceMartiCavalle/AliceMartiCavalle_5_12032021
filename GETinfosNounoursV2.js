@@ -17,7 +17,7 @@ const GetNounours = async function() {
         console.log(e.stack)
     }
 }
-GetNounours()
+GetNounours();
 
 //* cette fonction s'exécute après nounours
 async function DoSomething() {

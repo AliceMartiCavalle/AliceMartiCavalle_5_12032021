@@ -1,5 +1,6 @@
 // localStorage.clear();
 
+let bidule = 25;
 //// RESUME COMMANDE
 
 //!clear local storage une fois que tout est fait
@@ -155,26 +156,91 @@ let emailInput = document.getElementById('email');
 let valider = document.getElementById('valider');
 //* form
 let formUser = document.getElementById('formUser');
-let contact = new FormData();
+// let contact = new FormData();
 //? si je fais new FormData(formUser) ça ne capture pas le contenu des input
+
+let contact = {}; 
+
+let response_orderId;
+let response_contact;
+let response_products;
+
+let commande;
 
 valider.addEventListener('click', function() {
 
+
     //! faire une boucle ici ?
-    contact.append('firstName', firstNameInput.value);
-    contact.append('lastName', lastNameInput.value);
-    contact.append('address', addressInput.value);
-    contact.append('city', cityInput.value);
-    contact.append('email', emailInput.value);
+    // contact.append('firstName', firstNameInput.value);
+    // contact.append('lastName', lastNameInput.value);
+    // contact.append('address', addressInput.value);
+    // contact.append('city', cityInput.value);
+    // contact.append('email', emailInput.value);
+
+    // element.id = id;
+    contact.firstName = firstNameInput.value;
+    contact.lastName = lastNameInput.value;
+    contact.address = addressInput.value;
+    contact.city = cityInput.value;
+    contact.email = emailInput.value;
+    console.log(contact.firstName);
+    console.log(contact);
     
     //* parcourt l'objet
-    for (let pair of contact.entries()) {
-        console.log(pair[0] + ' : ' + pair[1]);
+    // for (let pair of contact.entries()) {
+    //     console.log(pair[0] + ' : ' + pair[1]);
+    // }
+
+    console.log(choixNounoursTab);
+    // [i][3]
+    let products = [];
+    for (let i = 0; i < choixNounoursTab.length; i++) {
+        products.push(choixNounoursTab[i][2]);
+        console.log(products);
     }
 
-    let products = [choixNounoursTab, total];
+    // let products = [choixNounoursTab, total];
     console.log(products);
-    console.log(JSON.stringify(products));
+    // console.log(JSON.stringify(products));
+
+    commande = {contact, products};
+    console.log(commande);
+    
+    // POST
+    const PostNounours = async function() {
+        fetch('http://localhost:3000/api/teddies/order', {
+            method: "POST",
+            headers : {
+                'Accept' : 'application/json',
+                'Content-type': 'application/json'
+            },
+            // body: JSON.stringify(commande) //* => 500 : internal server error
+            // body: JSON.stringify(contact, products) //* => 400 : bad request
+            // body: JSON.stringify({contact: contact, products: products}) //* => 500 : internal server error
+            // body: JSON.stringify({contact: contact, products: products}) //* OK 
+            body: JSON.stringify(commande) //* OK 
+        })
+        .then(response => response.json())
+        // .then(json => console.log(json));
+        .then(function (response) {
+            console.log(response.orderId);
+            response_orderId = response.orderId;
+            response_contact = response.contact;
+            response_products = response.products;
+            console.log(response_orderId);
+            console.log(response_contact);
+            console.log(response_products);
+            // confirmation();
+            // OK();
+            return response_orderId, response_contact, response_products;
+        });
+    }
+    PostNounours();   
+
+});
+
+
+
     
     //! J'ai essayé d'envoyer contact et procucts dans un objet, dans un array, 
     //! dans un objet lui-même dans un array et inversement, 
@@ -183,24 +249,25 @@ valider.addEventListener('click', function() {
     //! WHAT THE FUCK TU ME LAISSES L'ACHETER CE NOUNOURS OU BIEN ??
 
     //poster une commande : XML request (tentative 1)
-    let requestPOST = new XMLHttpRequest();
-    requestPOST.open("POST", "http://localhost:3000/api/teddies/order");
-    requestPOST.setRequestHeader("Content-Type", "application/json");
-    requestPOST.send(contact, products);
+    // let requestPOST = new XMLHttpRequest();
+    // requestPOST.open("POST", "http://localhost:3000/api/teddies/order");
+    // requestPOST.setRequestHeader("Content-Type", "application/json");
+    // requestPOST.send(contact, products);
     
     //poster une commande : fetch (tentative 2)
-    fetch('http://localhost:3000/api/teddies/order', {
-    method: "POST",
-    headers : {
-        'Content-type': 'application/json'
-    },
-    //du coup c'est un tableau, qu'est-ce qu'on doit envoyer exactement ?
-    //la consigne dit : "Requête JSON contenant un objet de contact et un tableau de produits"
-    //donc on le met dans quoi ? un {} ? un [] ??
-    body: [contact, products] 
-    })
-    .then(response => response.json())
-    .then(json => console.log(json));
+    // fetch('http://localhost:3000/api/teddies/order', {
+    // method: "POST",
+    // headers : {
+    //     'Accept' : 'application/json',
+    //     'Content-type': 'application/json'
+    // },
+    // //du coup c'est un tableau, qu'est-ce qu'on doit envoyer exactement ?
+    // //la consigne dit : "Requête JSON contenant un objet de contact et un tableau de produits"
+    // //donc on le met dans quoi ? un {} ? un [] ??
+    // body: JSON.stringify({contact: {contact}, products: [products]})
+    // })
+    // .then(response => response.json())
+    // .then(json => console.log(json));
 
     ////dans les deux cas, message d'erreur : 400 bad request
 
@@ -224,7 +291,7 @@ valider.addEventListener('click', function() {
     // PostCommande(contact, products);
 
 
-});
+
 
 
 
