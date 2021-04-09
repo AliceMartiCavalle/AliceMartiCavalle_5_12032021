@@ -1,20 +1,26 @@
 // localStorage.clear();
 
-//* NAVIGUER D'UNE PELUCHE A L'AUTRE
-
-let btnAutrePeluche = document.getElementById('autrePeluche');
-let DivImgNavPeluche = document.getElementById('imgNavPeluche');
-
-DivImgNavPeluche.style.display = 'none'; //!mettre ça dans sass
-// DivImgNavPeluche.style.border = '1px solid black';
-
-btnAutrePeluche.addEventListener('click', function() {
-    DivImgNavPeluche.style.display = 'block'; //!mettre une transition
+//* ALERT BOOTSTRAP
+$(document).ready(function(){
+    $('.toast').toast('show');
 });
+let toasts = document.getElementsByClassName('toast');
+let toast = toasts[0];
+// toast.setAttribute('data-autohide', 'false');
+
+//* round pill bootstrap (à ranger dans la page ensuite)
+let badge = document.querySelector('.badge');
+// badge.innerHTML = ``;
+
+let popover = document.querySelector('#popover');
+// popover.setAttribute('data-content', `0`);
+
+//* NAVIGUER D'UNE PELUCHE A L'AUTRE
+let DivImgNavPeluche = document.getElementById('imgNavPeluche');
 
 //* On capture emplacements des img de peluche sous le bouton "voir une autre peluche"
 //* et on remplit avec les images des peluches
-let imgNavPeluche = document.querySelectorAll('#imgNavPeluche > img');
+let imgNavPeluche = document.querySelectorAll('#imgNavPeluche > div > img');
 async function NavImg() {
     //* On attend d'avoir les infos nounours
     await GetNounours();
@@ -159,7 +165,11 @@ quantiteSelect.addEventListener('change', function() {
     quantite = quantiteSelect.selectedIndex + 1; //* pour que index = quantite
     console.log(quantite);
     if (quantite == 4) {
-        alert("Vous allez acheter 10 nounours : 9 + 1 gratuit !");
+        // alert("Vous allez acheter 10 nounours : 9 + 1 gratuit !");
+        // toast.setAttribute('data-autohide', 'false'); //? why
+        toast.setAttribute('class', 'toast show');
+        toast.dataset.autohide = 'false';
+        // console.log(toast);
     }
 });
 
@@ -192,7 +202,9 @@ function panier() {
     //? iconeLight.addEventListener('click', function() { //? pourquoi fonctionne pas ici ? //on s'en fout, ça fonctionne globalement
     footerPeluche.addEventListener('click', function() {
         //* on passe de icone light à icone dark
-        iconeDark.style.opacity = '1';
+        //! finalement en css, supprimer tout le code lié
+
+        // iconeDark.style.opacity = '1';
         //* on ajoute le choix de l'utilisateur au panier :
         //* couleur
         let choixNounours = [];
@@ -241,6 +253,37 @@ function panier() {
         }
 
         console.log('couleur + quantite :' + choixNounours);
+
+        //* On indique au niveau de la nav qu'un truc a été ajouté au panier
+        //! penser à vider le badge après la confirmation de commande
+        let contentBadge = parseInt(badge.textContent);
+        // console.log(contentBadge);
+        console.log(quantite);
+        if (quantite == 9) {
+            quantite += 1;
+            console.log(quantite);
+        }
+
+        if (isNaN(contentBadge)) {
+            badge.innerHTML = `${quantite}`;
+        } else {
+            badge.innerHTML = `${(quantite + contentBadge)}`;
+        }
+
+        //* permet d'initialiser le popover
+        $('[data-toggle="popover"]').popover(); // ici pour pas avoir inutilement un popover vide
+        let contentPopover = parseInt(popover.dataset.content);
+        console.log(contentPopover);
+        // console.log(contentPopover);
+        if (isNaN(contentPopover)) {
+            popover.setAttribute('data-content', `${quantite}`);
+            // popover.dataset.content = quantite;
+            console.log(quantite);
+        } else {
+            // popover.setAttribute('data-content', `${(quantite + contentPopover)}`);
+            popover.dataset.content = quantite + contentPopover;
+            console.log(quantite);
+        }
 
         //* on convertit quantité en number pour faire des calculs et on calcul prix
         quantite = parseInt(quantite);
@@ -296,8 +339,157 @@ function panier() {
         choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
         console.log(choixNounoursTab);
     }); 
+
+    //! truc à supprimer quand j'aurai une meilleure solution
+    let buttonToast = document.querySelector('.buttonToast')
+    buttonToast.addEventListener("click", function () {
+        let choixNounours = [];
+        console.log(couleur);
+        console.log(options);
+        switch (couleur) {
+            case 0:
+                choixNounours.push(`${options[0].textContent}`); //choix par défaut
+                break;
+            case 1:
+                choixNounours.push(`${options[1].textContent}`);
+                break;
+            case 2:
+                choixNounours.push(`${options[2].textContent}`);
+                break;
+            case 3:
+                choixNounours.push(`${options[3].textContent}`);
+                break;
+            default:
+                console.log("error couleur");
+                break;
+        }
+        console.log("couleur : " + choixNounours);
+
+        switch (
+            quantite //*quantite = index du select + 1
+        ) {
+            case 0:
+                choixNounours.push("1"); //* quantité par défaut
+                quantite = 1;
+                break;
+            case 1:
+                choixNounours.push("1");
+                break;
+            case 2:
+                choixNounours.push("2");
+                break;
+            case 3:
+                choixNounours.push("3");
+                break;
+            case 4:
+                choixNounours.push("10");
+                quantite = 9; //*car 1 gratuit
+                break;
+            default:
+                console.log("error quantite");
+                break;
+        }
+
+        console.log("couleur + quantite :" + choixNounours);
+
+        //* On indique au niveau de la nav qu'un truc a été ajouté au panier
+        //! penser à vider le badge après la confirmation de commande
+        let contentBadge = parseInt(badge.textContent);
+        // console.log(contentBadge);
+        console.log(quantite);
+        if (quantite == 9) {
+            quantite += 1;
+            console.log(quantite);
+        }
+
+        if (isNaN(contentBadge)) {
+            badge.innerHTML = `${quantite}`;
+        } else {
+            badge.innerHTML = `${quantite + contentBadge}`;
+        }
+
+        //* permet d'initialiser le popover
+        $('[data-toggle="popover"]').popover(); // ici pour pas avoir inutilement un popover vide
+        let contentPopover = parseInt(popover.dataset.content);
+        console.log(contentPopover);
+        // console.log(contentPopover);
+        if (isNaN(contentPopover)) {
+            popover.setAttribute("data-content", `${quantite}`);
+            // popover.dataset.content = quantite;
+            console.log(quantite);
+        } else {
+            // popover.setAttribute('data-content', `${(quantite + contentPopover)}`);
+            popover.dataset.content = quantite + contentPopover;
+            console.log(quantite);
+        }
+
+        //* on convertit quantité en number pour faire des calculs et on calcul prix
+        quantite = parseInt(quantite);
+        console.log(quantite);
+
+        //* trouver une solution moins barbare
+        console.log(prixTag.innerHTML);
+        let prix = JSON.stringify(prixTag.innerHTML);
+        prix = prix.replace(/<\/?[^>]+(>|$)/g, "");
+        prix = prix.split(": ");
+        prix = prix[1][0] + prix[1][1];
+        prix = parseInt(prix);
+        console.log(prix);
+
+        total = prix * quantite + "€";
+        console.log(total);
+
+        //* On garde que la partie id
+        let codeProduit = codeProduitTag.textContent;
+        codeProduit = codeProduit.split(" : ");
+        codeProduit = codeProduit[1];
+        console.log(codeProduit);
+
+        //* Idem pour la description
+        let description = descriptionTag.textContent;
+        description = description.split(" : ");
+        description = description[1];
+        console.log(description);
+
+        //* on ajoute les autres infos au tableau
+        choixNounours.push(
+            codeProduit,
+            nom.textContent,
+            total,
+            description,
+            imgPeluche.src
+        );
+        console.log(choixNounours);
+
+        // //* On envoie/récupère les infos nounours sur local storage
+        // localStorage.setItem("choixNounours", JSON.stringify(choixNounours));
+        // let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
+        // console.log(retrievedChoixNounours); // tes variables sont un peu longues, Alice // Au moins c'est parlant quoi
+
+        //* Si l'utilisateur achète plusieurs nounours d'un coup
+        console.log(JSON.parse(localStorage.getItem("choixNounoursTab")));
+        //* on récupère tableau vide de commande
+        choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
+        console.log(choixNounoursTab);
+        // retrievedChoixNounoursTab.unshift('un nounours test');
+        // console.log(retrievedChoixNounoursTab);
+        //* on ajoute choixNounours
+        choixNounoursTab.unshift(choixNounours);
+        console.log(choixNounoursTab);
+        // retrievedChoixNounoursTab.unshift('un 2e nounours test');
+        //* On envoie le tableau de commande sur local storage qui contient un nouveau nounours
+        //* A chaque tour, on ajoute un nounours
+        localStorage.setItem(
+            "choixNounoursTab",
+            JSON.stringify(choixNounoursTab)
+        );
+        choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
+        console.log(choixNounoursTab);
+    }); 
+    //! FIN truc à supprimer quand j'aurai une meilleure solution
 }
 panier();
+
 
 
 

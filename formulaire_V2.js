@@ -1,6 +1,5 @@
 // localStorage.clear();
 
-let bidule = 25;
 //// RESUME COMMANDE
 
 //!clear local storage une fois que tout est fait
@@ -8,8 +7,20 @@ let bidule = 25;
 let choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
 console.log(choixNounoursTab);
 
-// let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
-// console.log(retrievedChoixNounours);
+//* calcul de la quantité totale pour page de confirmation
+let quantiteTotale = 0;
+for (let i = 0; i < choixNounoursTab.length; i++) {
+    quantiteTotale += parseInt(choixNounoursTab[i][1]);
+    console.log(quantiteTotale);
+}
+
+//* On remet le badge sur le panier
+let badge = document.querySelector('.badge');
+if (quantiteTotale == 0) {
+    console.log("quantité totale = 0");
+} else {
+    badge.innerHTML = `${quantiteTotale}`;
+}
 
 //* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours
 let prixUniteTab = [];
@@ -160,16 +171,11 @@ let formUser = document.getElementById('formUser');
 //? si je fais new FormData(formUser) ça ne capture pas le contenu des input
 
 let contact = {}; 
-
-let response_orderId;
-let response_contact;
-let response_products;
-
 let commande;
 
 valider.addEventListener('click', function() {
 
-
+    document.location.href="confirmation.html"; 
     //! faire une boucle ici ?
     // contact.append('firstName', firstNameInput.value);
     // contact.append('lastName', lastNameInput.value);
@@ -205,7 +211,7 @@ valider.addEventListener('click', function() {
 
     commande = {contact, products};
     console.log(commande);
-    
+
     // POST
     const PostNounours = async function() {
         fetch('http://localhost:3000/api/teddies/order', {
@@ -224,20 +230,22 @@ valider.addEventListener('click', function() {
         // .then(json => console.log(json));
         .then(function (response) {
             console.log(response.orderId);
-            response_orderId = response.orderId;
-            response_contact = response.contact;
-            response_products = response.products;
-            console.log(response_orderId);
-            console.log(response_contact);
-            console.log(response_products);
-            // confirmation();
-            // OK();
-            return response_orderId, response_contact, response_products;
+            console.log(response.contact);
+            console.log(response.products);
+
+            //* infos nécessaires pour la page de confirmation
+            //! A faire passer via JS si possible
+            let infosConfirmation = [];
+            infosConfirmation.push(quantiteTotale, total, response.orderId, response.contact);
+            console.log(infosConfirmation);
+            localStorage.setItem("infosConfirmation", JSON.stringify(infosConfirmation));
         });
     }
     PostNounours();   
 
 });
+
+
 
 
 

@@ -17,7 +17,6 @@ h1 a {
 .SousTitre {
                             // border: 1px solid #000;
     font-size: .8em;
-
 }
 
 footer {
@@ -25,10 +24,23 @@ footer {
 }
 
 // page produit
+.toast {
+    position: absolute;
+    top: 70%;
+    // transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
 #imgNavPeluche {
-    > img {
+    > div {
+        padding: 0;
+        margin: 0;
+        img {
         width: 60px;
-        margin-left: 15px;
+        padding: 0;
+        margin: 15px 0 0 15px;
+        }
     }
 }
 .nav-item {
@@ -89,16 +101,22 @@ footer {
 .card-footer {
                             // border: 1px solid #000;
     position: relative;
-    > svg {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(2) {
-            position: absolute;
-            top: 12px;
-            right: 20px;
-            opacity: 0;
+    > a {
+        outline: none; //* sinon cadre moche au chargement de la page
+        color: black;
+        svg { // cart light
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            &:nth-child(2) { // cart dark
+                position: absolute;
+                top: 12px;
+                right: 20px;
+                opacity: 0;
+                &:active {
+                    opacity: 1;
+                }
+            }
         }
     }
 }

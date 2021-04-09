@@ -17,14 +17,19 @@
     <link rel="shortcut icon" href="images/favicon.ico" >
     <link rel="icon" type="image/gif" href="images/animated_favicon1.gif" >
     <link rel="stylesheet" href="css/oriteddy.css" />
+    <link rel="stylesheet" href="css/oriteddy.css" />
     <title>Page produit</title>
 </head>
-<body>
-    <header class="row d-flex justify-content-between mb-5">
-        <h1 class="bg-primary p-2">ORITEDDY</h1>
+<body class="p-2 p-lg-3">
+    <header class="row d-flex justify-content-between mb-5 ml-3">
+        <h1 class="text-primary">ORITEDDY : nos peluches</h1>
         <nav class="col navbar navbar-expand-lg align-items-end">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport">
-                <span class="navbar-toggler-icon bg-primary"></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </span>
             </button>
             <div id="navbarSupportedContent" class="collapse navbar-collapse d-flex">
                 <ul class="navbar-nav nav-justified nav-tabs d-flex w-100">
@@ -49,27 +54,41 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                             </svg>
-                            Panier
+                            Panier <span class="badge rounded-pill bg-primary text-white"></span>
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
+    <div class="toast" data-autohide="true">
+        <div class="toast-header">
+          <strong class="mr-auto text-primary">Attention !</strong>
+        </div>
+        <div class="toast-body">
+            Vous allez acheter 10 nounours : 9 + 1 gratuit !
+            <div class="mt-2 pt-2 border-top">
+                <button type="button" class="btn btn-primary btn-sm buttonToast" data-dismiss="toast">Ok !</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="toast">J'ai changé d'avis</button>
+            </div>
+        </div>
+      </div>
     <div class="row d-flex justify-content-center">
         <!-- <h1>Page produit</h1>
     id, name, price, img, description, colors -->
-            <div class="col-12 d-flex justify-content-center align-items-center mb-3">
-                <button type="button" class="btn btn-primary" id="autrePeluche">Voir une autre peluche !</button>
-                <div id="imgNavPeluche">
-                    <img src="" alt="">
-                    <img src="" alt="">
-                    <img src="" alt="">
-                    <img src="" alt="">
-                    <img src="" alt="">
+        <div class="col-12 d-flex justify-content-center align-items-center mb-3 flex-column flex-sm-row">
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#imgNavPeluche" id="autrePeluche">Voir une autre peluche !</button>
+            <div id="imgNavPeluche" class="panel-collapse collapse d-flex flex-column flex-sm-row">
+                <div class="list-group d-flex flex-column flex-sm-row">
+                    <img src="" alt="" class="list-group-item">
+                    <img src="" alt="" class="list-group-item">
+                    <img src="" alt="" class="list-group-item">
+                    <img src="" alt="" class="list-group-item">
+                    <img src="" alt="" class="list-group-item">
                 </div>
             </div>
-        <div class="col-6">
+        </div>
+        <div class="col-12 col-md-6">
             <div class="card">
                 <img src="" class="card-img-top" alt="peluche Albert" id="imgPeluche"/>
                 <div class="card-header">
@@ -120,13 +139,15 @@
                 </div>
                 <div class="card-footer text-right bg-transparent" id="footerPeluche">
                     <!-- <a href="#" class="card-link text-right"> -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
-                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                    </svg>                    
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
-                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
-                    </svg>
+                        <a href="#popover" data-toggle="popover" data-placement="top" title="Ajouté au panier :" data-content="" data-trigger="hover" id="popover">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                            <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>                    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>

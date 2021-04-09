@@ -1,29 +1,36 @@
 QUESTIONS
 
-Pourquoi le POST dans formulaire_V2.js (185-224) ne fonctionne pas ?
+Comment faire un même addeventlistener sur 2 boutons différents ?
+btn1 || btn2 .addEventListener('click'...
+
+Dans panier_V3.js, popover pas précis : affiche le bon chiffre seulement au 2e hover, comment faire ?
+
+La nav ne se replie pas bien quand on clique sur le bouton (dans produit.html),
+idem pour #imgNavPeluche
+
 
 
 PROBLEMES
 
-- L'icone panier passe en dark au premier click, ensuite pas de feedback pour l'utilisateur
-
 - Si on actualise, on perd la commande en cours, est-ce que c'est un problème (quand on recharge, le choixNounoursTab se réinitialise [ ])
 
 
-A FAIRE
+
+A FAIRE (EN COURS DE TRAITEMENT)
 
 ---Mise en page---
-* écraser les styles bootstrap
 * pb de nav pas responsive
 * ACCUEIL : homogénéiser tailles img dans carrousel + défilement auto + bouton stop, pb défilement horizontal
+* écraser les styles bootstrap ? flemme
+
+---SCSS---
+Mettre de l'ordre
 
 ---JS---
-- Quand on actualise la page formulaire, les lignes de commandes supprimées réapparaissent, rajouter un bout de code pour supprimer de local storage
-- Page de commande enregistrée avec id commande
-- Faire des boucles pour compacter tout ça (en cours)
-- Vider local storage sur la dernière page une fois la commande enregistrée
 - Vérifier les champs du formulaire de contact
+- Faire des boucles pour compacter tout ça (en cours)
 - Calculer la variable prix dans panier.js (251) autrement
+- Quand on actualise la page formulaire, les lignes de commandes supprimées réapparaissent, rajouter un bout de code pour supprimer de local storage ? bof, la flemme aussi
 
 En DERNIER si vraiment TOUT FONCTIONNE : virer les kilomètres de code commenté inutile et ne laisser que des console.log stratégiques
 
