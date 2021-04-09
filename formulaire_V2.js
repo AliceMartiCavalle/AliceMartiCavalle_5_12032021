@@ -175,7 +175,6 @@ let commande;
 
 valider.addEventListener('click', function() {
 
-    document.location.href="confirmation.html"; 
     //! faire une boucle ici ?
     // contact.append('firstName', firstNameInput.value);
     // contact.append('lastName', lastNameInput.value);
@@ -214,7 +213,8 @@ valider.addEventListener('click', function() {
 
     // POST
     const PostNounours = async function() {
-        fetch('http://localhost:3000/api/teddies/order', {
+        // fetch('http://localhost:3000/api/teddies/order', {
+        fetch('https://projet-oc-5.herokuapp.com/api/teddies/order', {
             method: "POST",
             headers : {
                 'Accept' : 'application/json',
@@ -239,6 +239,11 @@ valider.addEventListener('click', function() {
             infosConfirmation.push(quantiteTotale, total, response.orderId, response.contact);
             console.log(infosConfirmation);
             localStorage.setItem("infosConfirmation", JSON.stringify(infosConfirmation));
+        
+            //* On envoie vers la page de confirmation
+            setTimeout(function() {
+                document.location.href="confirmation.html"; 
+            }, 300);
         });
     }
     PostNounours();   

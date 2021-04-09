@@ -6,7 +6,8 @@ let data;
 //*On récupère les infos nounours sur la base de données
 const GetNounours = async function() {
     try {
-        let response = await fetch('http://localhost:3000/api/teddies')
+        // let response = await fetch('http://localhost:3000/api/teddies')
+        let response = await fetch('https://projet-oc-5.herokuapp.com/api/teddies')
         if (response.ok) {
             /*let*/ data = await response.json()
             console.log(data)
