@@ -3,7 +3,8 @@ $color : (
     "secondary" : rgb(206, 18, 174),
     "dark" : #000,
     "light" : #DDD,
-    "focus" : rgb(247, 93, 4)
+    "focus" : rgb(247, 93, 4),
+    "danger" : rgb(212, 3, 3)
 );
 
 //? Comment modifier la couleur des flèches ?
@@ -136,4 +137,10 @@ footer {
 }
 #toastForm {
     top: 30%;
+}
+
+input:not(:focus):invalid {
+   
+    background-color: transparentize(map-get($color, danger), .7);
+    // color: red;
 }

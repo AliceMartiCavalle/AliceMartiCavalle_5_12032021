@@ -12,6 +12,8 @@ PROBLEMES
 
 A FAIRE (EN COURS DE TRAITEMENT)
 
+Form : empêcher validation JS si un truc invalid CSS ?
+
 ---Mise en page---
 * ACCUEIL : homogénéiser tailles img dans carrousel + défilement auto + bouton stop, pb défilement horizontal
 * écraser les styles bootstrap ? flemme

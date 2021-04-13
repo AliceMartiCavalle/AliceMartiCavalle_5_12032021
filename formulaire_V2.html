@@ -82,7 +82,7 @@
         Total : 
     </div>
     <h2 class="mt-5">Dites-nous où envoyer vos peluches</h2>
-    <form class="row g-3 position-relative" id="formUser" name="formUser">
+    <form onsubmit="return postForm()" class="row g-3 position-relative" id="formUser" name="formUser">
         <div class="toast" id="toastForm" data-autohide="true">
             <div class="toast-header">
               <strong class="mr-auto text-primary">Panier vide !</strong>
@@ -98,31 +98,31 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="lastName" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="lastName" name="lastName">
+            <label for="lastName" class="form-label" autofocus>Nom</label>
+            <input type="text" class="form-control" id="lastName" autofocus required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Doe">
         </div>
         <div class="col-md-6">
             <label for="firstName" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="firstName" name="firstName">
+            <input type="text" class="form-control" id="firstName" required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Jeanne">
         </div>
 
         <div class="col-12">
             <label for="address" class="form-label">Adresse</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="N° rue">
+            <input type="text" class="form-control" id="address" placeholder="N° rue" required minlength="8" maxlength="100" pattern="[a-zA-ZÀ-ÿ0-9\-\., ]+" value="25 rue du bout du monde">
         </div>
 
         <div class="col-md-6">
             <label for="city" class="form-label">Ville</label>
-            <input type="text" class="form-control" id="city" name="city">
+            <input type="text" class="form-control" id="city" required minlength="3" maxlength="20" pattern="[a-zA-ZÀ-ÿ\-\. ]+" value="Bord du Précipice">
         </div>
         
         <div class="col-md-6">
             <label for="email" class="form-label">Mail</label>
-            <input type="text" class="form-control" id="email" name="email">
+            <input type="email" class="form-control" id="email" required value="jeanne.doe@gmail.com">
         </div>
         
         <div class="col-12 mt-3">
-            <input class="btn btn-primary" type="submit" value="Valider" id="valider">
+            <input class="btn btn-primary" type="submit" value="Valider" id="valider" required>
           <!-- <button type="submit" class="btn btn-primary" id="valider">Valider</button> -->
         </div>
       </form>

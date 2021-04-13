@@ -7,6 +7,10 @@
 let choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
 console.log(choixNounoursTab);
 
+let quantiteTotale;
+
+let total;
+
 if (choixNounoursTab != null) {
 
     //* On change le titre en fonction de si une commande a été passée ou pas
@@ -15,7 +19,7 @@ if (choixNounoursTab != null) {
     
     
     //* calcul de la quantité totale pour page de confirmation
-    let quantiteTotale = 0;
+    quantiteTotale = 0;
     for (let i = 0; i < choixNounoursTab.length; i++) {
         quantiteTotale += parseInt(choixNounoursTab[i][1]);
         console.log(quantiteTotale);
@@ -101,7 +105,7 @@ if (choixNounoursTab != null) {
     
     //* On calcule le prix
     let totalDiv = document.getElementById('total');
-    let total = 0;
+    total = 0;
     //* on parcourt le tableau de nounours pour récup prix / quantité de chaque nounours
     for (let i = 0; i < choixNounoursTab.length; i++) {
         let prix = choixNounoursTab[i][4];
@@ -191,8 +195,11 @@ let toast = toasts[0];
  */
 
 //* annuler comportement par défaut pour que la page se recharge pas
+//! temporaire
 $("#valider").click(function(e) { 
     e.preventDefault();
+
+    postForm();
     // creation.style.border = '1px solid #000';
 });
 
@@ -209,45 +216,47 @@ let formUser = document.getElementById('formUser');
 // let contact = new FormData();
 //? si je fais new FormData(formUser) ça ne capture pas le contenu des input
 
-let contact = {}; 
-let commande;
+//! nécessaire à version 1 de POST
+// let contact = {}; 
+// let commande;
+//!
 
-valider.addEventListener('click', function() {
-
-    //* Si le panier est vide, on affiche un toast
-    if (choixNounoursTab === null || choixNounoursTab.length == 0) {
-        toast.setAttribute('class', 'toast toast--form show');
-        toast.dataset.autohide = 'false';
-        console.log('toast', toast);
-    }
+//* vérifie les champs du formulaire
+function verifForm() {
+    console.log('FONCTION VERIFFORM');
+    
+    let contact = {}; 
 
     contact.firstName = firstNameInput.value;
-    contact.lastName = lastNameInput.value;
-    contact.address = addressInput.value;
-    contact.city = cityInput.value;
-    contact.email = emailInput.value;
     console.log(contact.firstName);
-    console.log(contact);
-    
-    //* parcourt l'objet
-    // for (let pair of contact.entries()) {
-    //     console.log(pair[0] + ' : ' + pair[1]);
-    // }
+    contact.lastName = lastNameInput.value;
+    console.log(contact.lastName);
+    contact.address = addressInput.value;
+    console.log(contact.address);
+    contact.email = emailInput.value;
+    console.log(contact.email);
+    contact.city = cityInput.value;
+    console.log(contact.city);
 
-    console.log(choixNounoursTab);
-    // [i][3]
+    //* verif ici
+    
+
+    return contact;
+};
+
+//* envoie les infos à l'API via fetch : POST
+function postApi () {
+    console.log('FONCTION POST API')
+
+    let contact = verifForm();
+
     let products = [];
     for (let i = 0; i < choixNounoursTab.length; i++) {
         products.push(choixNounoursTab[i][2]);
         console.log(products);
     }
 
-    // let products = [choixNounoursTab, total];
-    console.log(products);
-    // console.log(JSON.stringify(products));
-
-    commande = {contact, products};
-    console.log(commande);
+    let commande = {contact, products};
 
     // POST
     const PostNounours = async function() {
@@ -272,7 +281,6 @@ valider.addEventListener('click', function() {
             console.log(response.products);
 
             //* infos nécessaires pour la page de confirmation
-            //! A faire passer via JS si possible
             let infosConfirmation = [];
             infosConfirmation.push(quantiteTotale, total, response.orderId, response.contact);
             console.log(infosConfirmation);
@@ -280,13 +288,131 @@ valider.addEventListener('click', function() {
         
             //* On envoie vers la page de confirmation
             setTimeout(function() {
-                document.location.href="confirmation.html"; 
+                // document.location.href="confirmation.html"; 
             }, 300);
         });
     }
-    PostNounours();   
+    PostNounours();  
 
-});
+}
+
+//* fonction activée par l'utilisateur avec bouton valider 
+function postForm() {
+    
+    console.log('FONCTION POSTFORM');
+
+    //* Si le panier est vide, on affiche un toast
+    if (choixNounoursTab === null || choixNounoursTab.length == 0) {
+        toast.setAttribute('class', 'toast toast--form show');
+        toast.dataset.autohide = 'false';
+        console.log('toast', toast);
+    }
+
+    postApi();
+
+    return false; // pour éviter que la page se recharge
+}
+
+// //! ancienne version FONCTIONNELLE
+// valider.addEventListener('onsubmit', function(e) {
+
+//     // console.log('allo ?');
+//     // e.preventDefault();
+
+//     if (choixNounoursTab === null || choixNounoursTab.length == 0) {
+//         toast.setAttribute('class', 'toast toast--form show');
+//         toast.dataset.autohide = 'false';
+//         console.log('toast', toast);
+//     }
+
+//     contact.firstName = firstNameInput.value;
+//     contact.lastName = lastNameInput.value;
+//     contact.address = addressInput.value;
+//     contact.city = cityInput.value;
+//     contact.email = emailInput.value;
+//     console.log(contact.firstName);
+//     console.log(contact);
+    
+//     //* parcourt l'objet
+//     // for (let pair of contact.entries()) {
+//     //     console.log(pair[0] + ' : ' + pair[1]);
+//     // }
+
+//     console.log(choixNounoursTab);
+//     // [i][3]
+//     let products = [];
+//     for (let i = 0; i < choixNounoursTab.length; i++) {
+//         products.push(choixNounoursTab[i][2]);
+//         console.log(products);
+//     }
+
+//     // let products = [choixNounoursTab, total];
+//     console.log(products);
+//     // console.log(JSON.stringify(products));
+
+//     commande = {contact, products};
+//     console.log(commande);
+
+//     // POST
+//     const PostNounours = async function() {
+//         // fetch('http://localhost:3000/api/teddies/order', {
+//         fetch('https://projet-oc-5.herokuapp.com/api/teddies/order', {
+//             method: "POST",
+//             headers : {
+//                 'Accept' : 'application/json',
+//                 'Content-type': 'application/json'
+//             },
+//             // body: JSON.stringify(commande) //* => 500 : internal server error
+//             // body: JSON.stringify(contact, products) //* => 400 : bad request
+//             // body: JSON.stringify({contact: contact, products: products}) //* => 500 : internal server error
+//             // body: JSON.stringify({contact: contact, products: products}) //* OK 
+//             body: JSON.stringify(commande) //* OK 
+//         })
+//         .then(response => response.json())
+//         // .then(json => console.log(json));
+//         .then(function (response) {
+//             console.log(response.orderId);
+//             console.log(response.contact);
+//             console.log(response.products);
+
+//             //* infos nécessaires pour la page de confirmation
+//             //! A faire passer via JS si possible
+//             let infosConfirmation = [];
+//             infosConfirmation.push(quantiteTotale, total, response.orderId, response.contact);
+//             console.log(infosConfirmation);
+//             localStorage.setItem("infosConfirmation", JSON.stringify(infosConfirmation));
+        
+//             //* On envoie vers la page de confirmation
+//             setTimeout(function() {
+//                 document.location.href="confirmation.html"; 
+//             }, 300);
+//         });
+//     }
+//     PostNounours();   
+
+// });
+// //! FIN ancienne version FONCTIONNELLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
