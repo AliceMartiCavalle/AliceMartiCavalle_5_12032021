@@ -10,10 +10,13 @@ let toast = toasts[0];
 
 //* round pill bootstrap (à ranger dans la page ensuite)
 let badge = document.querySelector('.badge');
-// badge.innerHTML = ``;
 
+//* Utilisé aussi quand on clique sur l'icone cart
 let popover = document.querySelector('#popover');
 // popover.setAttribute('data-content', `0`);
+
+let lienPanier = document.querySelector('#footerPeluche > .card-link');
+lienPanier.style.opacity = '0';
 
 //* NAVIGUER D'UNE PELUCHE A L'AUTRE
 let DivImgNavPeluche = document.getElementById('imgNavPeluche');
@@ -131,9 +134,24 @@ async function Affichage() {
             }
         }          
     }
-    //* Par défaut, on affiche Norbert :
+
     let i = 0;
-    Remplissage();
+
+    //* On parcourt les infos renvoyées par fetch
+    for (let z = 0; z < data.length; z++) {
+        //* On affiche les peluches en fonction du location hash
+        //* Si location.hash = id de la peluche
+        if (location.hash === `#${data[z]._id}`) {
+            i = z;
+            Remplissage();
+        //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
+        } else if (location.hash === '' || location.hash === '#popover') { //* si on actualise la page
+            i = 0;
+            Remplissage();
+        } else {
+            console.log('error hash');
+        }
+    }
 
     //* Si l'utilisateur clique sur une autre peluche, on l'affiche
     //? What the fuck is happening here 
@@ -151,7 +169,7 @@ async function Affichage() {
         })(y);
     }
 }
-Affichage()
+Affichage();
 
 
 
@@ -187,24 +205,44 @@ let iconesPanier = document.querySelectorAll("#footerPeluche > svg");
 let iconeLight = iconesPanier[0];
 let iconeDark = iconesPanier[1]
 
-let footerPeluche = document.getElementById('footerPeluche');
+// let footerPeluche = document.getElementById('footerPeluche');
 
-//* Si l'utilisateur achète plusieurs nounours
-let choixNounoursTab = [];
+//* On vérifie si l'utilisateur a déjà des nounours dans local storage,
+//* Si non on initialise choixNounoursTab avec un tableau vide
+let choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab")) || [];
+console.log(choixNounoursTab)
+// let choixNounoursTab = [];
 localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
 // console.log(JSON.parse(localStorage.getItem("choixNounoursTab")));
 
+//// Si l'utilisateur a déjà une commande en cours
+let quantitePanier = 0;
+//* On calcule le nombre de nounours actuellement dans le panier
+for (let i = 0; i < choixNounoursTab.length; i++) {
+    quantitePanier += parseInt(choixNounoursTab[i][1]);
+    console.log(quantitePanier);
+}
+//* On indique cette info dans le popover et le badge
+if (quantitePanier > 0) {
+    badge.innerHTML = `${quantitePanier}`;
+}
+popover.dataset.content = quantitePanier;
+
+
+
+
 
 function panier() {     
-    // localStorage.clear();
 
-    //* Quand on clique sur le footer de la carte
+    //* Quand on clique sur l'icone panier de la card
     //? iconeLight.addEventListener('click', function() { //? pourquoi fonctionne pas ici ? //on s'en fout, ça fonctionne globalement
-    footerPeluche.addEventListener('click', function() {
+    popover.addEventListener('click', function() {
         //* on passe de icone light à icone dark
         //! finalement en css, supprimer tout le code lié
 
-        // iconeDark.style.opacity = '1';
+        //* On affiche un lien vers le panier dans le footer de la card
+        lienPanier.style.opacity = '1';
+
         //* on ajoute le choix de l'utilisateur au panier :
         //* couleur
         let choixNounours = [];
@@ -284,7 +322,11 @@ function panier() {
             popover.dataset.content = quantite + contentPopover;
             console.log(quantite);
         }
-
+        $("[data-toggle='popover']").popover('show');
+        setTimeout(function() {
+            $("[data-toggle='popover']").popover('hide');
+        }, 1000)
+        
         //* on convertit quantité en number pour faire des calculs et on calcul prix
         quantite = parseInt(quantite);
         console.log(quantite);
@@ -491,5 +533,5 @@ function panier() {
 panier();
 
 
-
+// localStorage.clear();
 
