@@ -236,24 +236,51 @@ function fillCircle(x) {
         couleur = 0;
     }
 
+    //* Par défaut on cache le cercle svg et on affiche le message small
+    circle.style.opacity = '1';
+    small.style.opacity = '0';
+
     console.log(colorsOptions[couleur].textContent);
 
-    //* Par défaut on cache le cercle svg et on affiche le message small
-    circle.style.opacity = '0';
-    small.style.opacity = '1';
-    //? Du coup ça parcourt tout le tableau de couleur, ça s'arrête pas quand on tombe sur la bonne couleur
-    //? Comment fair ça avec while ?
-    //* On parcourt la 'base de données' de couleurs et on affiche celle qui correspond
-    //* couleur est initialisé à 0, l'option 0 du sélect par défaut
-    for (let i = 0; i < colors.length; i++) {
-        //* Si le nom de l'option est == à un nom dans la liste des couleurs
-        if (colorsOptions[couleur].textContent == colors[i].name) {
-            console.log('fill couleur 1')
-            circle.style.opacity = '1';
-            small.style.opacity = '0';
-            circle.style.fill = colors[i].color;
+    let circleColor = colorsOptions[couleur].textContent;
+    console.log(circleColor.toLowerCase().replace(' ', ''));
+    //* Si la couleur n'existe pas (cf colors.js)
+    if (colourNameToHex(circleColor.toLowerCase().replace(' ', '')) == false) {
+        
+        //* Si la couleur dans la base de donnée commence par Pale ou Dark
+        if (circleColor.startsWith('Pale')) {
+            console.log(circleColor);
+            //* On convertit le nom en code couleur (cf colors.js)
+            circleColor = colourNameToHex(circleColor.replace('Pale ', '').toLowerCase());
+            console.log(circleColor);
+            //* On lighten/darken la couleur (cf colors.js)
+            circleColor = LightenDarkenColor(circleColor.replace('#', ''), 30);
+            console.log(circleColor);
+            circleColor = `#${circleColor}`;
+            circle.style.fill = circleColor;
+            // circle.style.fill = `#${circleColor}`; //* non : la couleur doit être utilisable directement dans page form
+            console.log(circle);
+            
+        } else if (circleColor.startsWith('Dark')) {
+            console.log(circleColor);
+            circleColor = colourNameToHex(circleColor.replace('Dark ', '').toLowerCase());
+            console.log(circleColor);
+            circleColor = LightenDarkenColor(circleColor.replace('#', ''), -20);
+            console.log(circleColor);
+            circleColor = `#${circleColor}`;
+            circle.style.fill = circleColor;
+            console.log(circle);
         }
+    } else if (circleColor == undefined) { //? utile ?
+        circle.style.opacity = '0';
+        small.style.opacity = '1';
+    } else {
+        console.log(circleColor);
+        circle.style.fill = circleColor.replace(' ', '').toLowerCase();
+        console.log(circle);
     }
+    console.log(circleColor);
+    return circleColor.replace(' ', '').toLowerCase();
 }
 
 //* footer carte et icones du footer carte pour interaction utilisateur (eventListener)
@@ -412,7 +439,9 @@ function panier() {
         console.log(description);
         
         //* on ajoute les autres infos au tableau
-        choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src);
+        let circleColor = fillCircle();
+        console.log(circleColor);
+        choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src, circleColor);
         console.log(choixNounours);
 
         // //* On envoie/récupère les infos nounours sur local storage

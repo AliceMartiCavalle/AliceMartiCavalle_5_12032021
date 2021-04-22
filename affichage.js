@@ -1,3 +1,5 @@
+// localStorage.clear();
+
 let imgs = document.querySelectorAll('img');
 
 async function afficheNounours() {
@@ -36,4 +38,3 @@ if (choixNounoursTab != null) {
 
 }
 
-// localStorage.clear();

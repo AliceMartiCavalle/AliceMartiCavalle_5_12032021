@@ -3,13 +3,14 @@ $color : (
     "secondary" : rgb(206, 18, 174),
     "dark" : #000,
     "light" : #DDD,
-    "focus" : rgb(247, 93, 4),
+    "focus" : rgb(128, 128, 128),
     "danger" : rgb(212, 3, 3)
 );
 
 //? Comment modifier la couleur des flèches ?
 .carousel-control-prev-icon {
-    color : blue;
+    color : #a52a2a;
+    color : #b93e3e;
 }
 
 h1 a {
@@ -61,7 +62,7 @@ footer {
     // z-index: 1;
     & .personnaliser div svg{
                             
-        // border: 1px solid red;
+        // border: 5px solid red;
         width: 25px;
         // stroke-width: 5px;
         // stroke: green;

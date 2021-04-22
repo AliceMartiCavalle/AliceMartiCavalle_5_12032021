@@ -1,27 +1,42 @@
 ////RECUPERER INFOS NOUNOURS SUR BASE DE DONNEES
 
 //*On déclare réponse en dehors de la requête afin de pouvoir l'utiliser ensuite
-let data;
+// let data;
 
 //*On récupère les infos nounours sur la base de données
+// const GetNounours = async function() {
+//     try {
+//         // let response = await fetch('http://localhost:3000/api/teddies')
+//         let response = await fetch('https://projet-oc-5.herokuapp.com/api/teddies')
+//         if (response.ok) {
+//             /*let*/ data = await response.json()
+//             console.log(data)
+//         } else {
+//             console.error('response : ', response.status)
+//         }
+//     } catch (e) {
+//         console.log(e.stack)
+//     }
+// }
+// let data;
+console.log('allo ?');
+
 const GetNounours = async function() {
-    try {
-        // let response = await fetch('http://localhost:3000/api/teddies')
-        let response = await fetch('https://projet-oc-5.herokuapp.com/api/teddies')
-        if (response.ok) {
-            /*let*/ data = await response.json()
-            console.log(data)
-        } else {
-            console.error('response : ', response.status)
-        }
-    } catch (e) {
-        console.log(e.stack)
-    }
+    // let response = await fetch('http://localhost:3000/api/teddies')
+    return await fetch('https://projet-oc-5.herokuapp.com/api/teddies')
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json);
+            if (json.ok) {
+                console.log('allo ?');
+            }
+            // LogData(json);
+        })
+        .catch((e) => console.log(e.stack))
 }
-GetNounours();
 
 //* cette fonction s'exécute après nounours
-async function DoSomething() {
+async function LogData(data) {
     console.log(data) //undefined
     await GetNounours();
     console.log(data) //contient infos nounours
@@ -45,7 +60,7 @@ async function DoSomething() {
     console.log(data[0].colors[3])
 
 }
-DoSomething()
+// LogData();
 
 
 

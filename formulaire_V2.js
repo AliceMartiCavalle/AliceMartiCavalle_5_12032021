@@ -100,18 +100,18 @@ if (choixNounoursTab != null) {
         // </div>
         let newCommandeSvg = newCommandeDiv[4];
         newCommandeSvg.setAttribute("class", "col-1 d-flex align-items-center circle");
-        let color;
-        console.log(choixNounoursTab[i][0]);
-        for (let y = 0; y < colors.length; y++) {
-            console.log(colors[y].name);
-            if (choixNounoursTab[i][0] == colors[y].name) {
-                console.log('fill couleur')
-                // circle.style.fill = colors[i].color;
-                color = colors[y].color;
-                console.log(color);
-            }
-        }
-        newCommandeSvg.innerHTML = `<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4" fill="${color}"/></svg>`;
+        // let color;
+        // console.log(choixNounoursTab[i][0]);
+        // for (let y = 0; y < colors.length; y++) {
+        //     console.log(colors[y].name);
+        //     if (choixNounoursTab[i][0] == colors[y].name) {
+        //         console.log('fill couleur')
+        //         // circle.style.fill = colors[i].color;
+        //         color = colors[y].color;
+        //         console.log(color);
+        //     }
+        // }
+        newCommandeSvg.innerHTML = `<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4" fill="${choixNounoursTab[i][7]}"/></svg>`;
         console.log(newCommandeSvg);
        
         //* icone poubelle
