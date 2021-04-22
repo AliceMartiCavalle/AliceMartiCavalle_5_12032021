@@ -59,8 +59,12 @@ footer {
     position: relative;
     height: 250px;
     // z-index: 1;
-    & .personnaliser:nth-child(2) {
-                                        // border: 1px solid #000;
+    & .personnaliser div svg{
+                            
+        // border: 1px solid red;
+        width: 25px;
+        // stroke-width: 5px;
+        // stroke: green;
         // z-index: 2;
     }
     & .bio:nth-child(3) {
@@ -131,6 +135,11 @@ footer {
 //* PAGE FORM
 .imgCommande {
     width: 70px;
+}
+.circle svg {
+    // border: 1px solid #000;
+    width: 35px;
+    // height: 10px;
 }
 .bin:hover {
     cursor : pointer;

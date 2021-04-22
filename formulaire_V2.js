@@ -58,7 +58,7 @@ if (choixNounoursTab != null) {
     for (let i = 0; i < choixNounoursTab.length; i++) {
         //* nouvelle ligne de commande
         let newCommande = document.createElement("div");
-        newCommande.innerHTML = "<div><img /></div><div>nom</div><div>prix</div><div>couleur</div><div>supr</div>";
+        newCommande.innerHTML = "<div><img /></div><div>nom</div><div>prix</div><div>couleur</div><div>svg</div><div>supr</div>";
         newCommande.setAttribute("class", "commande row border-bottom border-primary")
         
         //* On sélectionne tous les éléments de la ligne et on remplit un par un
@@ -88,12 +88,34 @@ if (choixNounoursTab != null) {
        
         //* couleur
         let newCommandeCouleur = newCommandeDiv[3];
-        newCommandeCouleur.setAttribute("class", "col-3 d-flex align-items-center");
+        newCommandeCouleur.setAttribute("class", "col-2 d-flex align-items-center");
         newCommandeCouleur.innerHTML = `<strong>Couleur : &nbsp;</strong>${choixNounoursTab[i][0]}`;
         console.log(newCommandeCouleur);
+        
+        //* svg couleur
+        // <div class="col-1">
+        //     <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" class="ml-2">
+        //         <circle cx="5" cy="5" r="4" fill="none" stroke="black" stroke-width="3%" />
+        //     </svg>
+        // </div>
+        let newCommandeSvg = newCommandeDiv[4];
+        newCommandeSvg.setAttribute("class", "col-1 d-flex align-items-center circle");
+        let color;
+        console.log(choixNounoursTab[i][0]);
+        for (let y = 0; y < colors.length; y++) {
+            console.log(colors[y].name);
+            if (choixNounoursTab[i][0] == colors[y].name) {
+                console.log('fill couleur')
+                // circle.style.fill = colors[i].color;
+                color = colors[y].color;
+                console.log(color);
+            }
+        }
+        newCommandeSvg.innerHTML = `<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4" fill="${color}"/></svg>`;
+        console.log(newCommandeSvg);
        
         //* icone poubelle
-        let newCommandeIcon = newCommandeDiv[4];
+        let newCommandeIcon = newCommandeDiv[5];
         newCommandeIcon.setAttribute("class", "col-1 d-flex align-items-center bin");
         newCommandeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg>`;
         

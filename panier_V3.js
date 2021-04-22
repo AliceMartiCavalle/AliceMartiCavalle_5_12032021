@@ -96,6 +96,13 @@ let details = document.querySelectorAll('.detail > p');
 let codeProduitTag = details[1];
 let prixTag = details[2];
 let descriptionTag = details[3];
+let circle = document.querySelector('.personnaliser > div > svg > circle');
+let small = document.querySelector('.personnaliser > div > small');
+// circle.style.fill = "#C3C3C3";
+//* Par défaut on laisse le cercle de couleur caché
+circle.style.opacity = "0";
+small.style.opacity = "0";
+
 //* récupérer emplacement image
 let imgPeluche = document.getElementById('imgPeluche');
 //* récupérer contenu des options
@@ -132,7 +139,11 @@ async function Affichage() {
                 options[y].textContent = data[i].colors[y];
                 options[y].removeAttribute('disabled');
             }
-        }          
+        }  
+        //* Par défaut on met le select sur la 1ère option
+        options[0].setAttribute('selected', 'selected');
+        console.log(options[0]);
+        fillCircle('default');        
     }
 
     let i = 0;
@@ -194,11 +205,56 @@ quantiteSelect.addEventListener('change', function() {
 //* récupérer emplacement couleurs
 let couleurSelect = document.getElementById('couleurSelect');
 let couleur = 0; //* pour choix par défaut dans le select
+let colorsOptions = document.querySelectorAll('#couleurSelect > option');
+console.log(colorsOptions[couleur].textContent);
+
 
 couleurSelect.addEventListener('change', function() {
     couleur = couleurSelect.selectedIndex;
     console.log(couleur);
+    console.log(colorsOptions[couleur].textContent);
+
+    fillCircle(colorsOptions[couleur].textContent);
+    
 });
+
+// async function fillCircleDefault() {
+//     await GetNounours();
+//     circle.style.opacity = '0';
+//     small.style.opacity = '1';
+//     fillCircle();
+// }
+// fillCircleDefault();
+
+function fillCircle(x) {
+    console.log('FILL_CIRCLE');
+
+    console.log(x);
+    //* par défaut on affiche la 1ère couleur du sélect
+    //* ça évite que l'utilisateur tombe sur l'option "à venir" du select et le small d'erreur "visualisation bientôt dispo"
+    if (x == 'default') { 
+        couleur = 0;
+    }
+
+    console.log(colorsOptions[couleur].textContent);
+
+    //* Par défaut on cache le cercle svg et on affiche le message small
+    circle.style.opacity = '0';
+    small.style.opacity = '1';
+    //? Du coup ça parcourt tout le tableau de couleur, ça s'arrête pas quand on tombe sur la bonne couleur
+    //? Comment fair ça avec while ?
+    //* On parcourt la 'base de données' de couleurs et on affiche celle qui correspond
+    //* couleur est initialisé à 0, l'option 0 du sélect par défaut
+    for (let i = 0; i < colors.length; i++) {
+        //* Si le nom de l'option est == à un nom dans la liste des couleurs
+        if (colorsOptions[couleur].textContent == colors[i].name) {
+            console.log('fill couleur 1')
+            circle.style.opacity = '1';
+            small.style.opacity = '0';
+            circle.style.fill = colors[i].color;
+        }
+    }
+}
 
 //* footer carte et icones du footer carte pour interaction utilisateur (eventListener)
 let iconesPanier = document.querySelectorAll("#footerPeluche > svg");
