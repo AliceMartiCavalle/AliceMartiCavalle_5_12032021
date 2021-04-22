@@ -11,29 +11,9 @@ let quantiteTotale;
 
 let total;
 
-if (choixNounoursTab != null) {
-
-    //* On change le titre en fonction de si une commande a été passée ou pas
-    let h2 = document.querySelector('h2');
-    h2.innerHTML = `Résumé de votre commande`;
-    
-    
-    //* calcul de la quantité totale pour page de confirmation
-    quantiteTotale = 0;
-    for (let i = 0; i < choixNounoursTab.length; i++) {
-        quantiteTotale += parseInt(choixNounoursTab[i][1]);
-        console.log(quantiteTotale);
-    }
-    
-    //* On remet le badge sur le panier
-    let badge = document.querySelector('.badge');
-    if (quantiteTotale == 0) {
-        console.log("quantité totale = 0");
-    } else {
-        badge.innerHTML = `${quantiteTotale}`;
-    }
-    
+function GetPrixPerUnite() {
     //* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours
+    //? Un fois que j'aurai compris comment on sort ces putains d'infos de ces saloperies de fetch, peut-être que je ferai autrement
     let prixUniteTab = [];
     //* On parcourt le tableau avec les nounours
     for (let i = 0; i < choixNounoursTab.length; i++) {
@@ -50,9 +30,11 @@ if (choixNounoursTab != null) {
         console.log(prixUniteTab);
     }
     console.log(prixUniteTab);
-    
-    let commandeTab = []; //pour delete qd click bin
-    
+    return prixUniteTab;
+}
+
+function CreateCommandeLines(prixUniteTab) {
+    let commandeTab = [];
     let commandeAll = document.getElementById('commandeAll');
     //* On ajoute des lignes de commandes en fonction du nombre de nounours
     for (let i = 0; i < choixNounoursTab.length; i++) {
@@ -124,6 +106,91 @@ if (choixNounoursTab != null) {
         commandeTab.push(newCommande); // pour bin
     }
     console.log(commandeTab);
+    return commandeTab;
+}
+
+function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
+
+    //* On repère les bins dans html
+    let binAll = document.querySelectorAll(".bin")
+    // let bin = [];
+    console.log(binAll);
+    console.log(binAll[0]);
+    console.log(binAll[1]);
+    //* On parcourt les lignes de commandes (1 commande / case du tableau choixNounoursTab)
+    for (let i = 0; i < choixNounoursTab.length; i++) {
+        //* on capture toutes les bins dans un tableau
+        // bin.push(newCommandeIconAll[i]); 
+        // console.log(bin[i]);
+        console.log(binAll[i]);
+        // console.log(total);
+        // console.log(prixUniteTab);
+        //* Pour chaque bin, on efface la ligne qui lui correspond au click
+        binAll[i].addEventListener('click', function() {
+
+            console.log('BIN');
+            console.log(binAll[i]);
+            console.log(commandeTab[i]);
+            commandeTab[i].remove();
+
+            //* On décrémente le badge dans la nav
+            //! revoir si il reste plus que 1 nours, condition pour 1 ?
+            if (choixNounoursTab.length > 0) {
+                badge.innerHTML = `${(quantiteTotale - choixNounoursTab[i][1])}`;
+            } else {
+                badge.innerHTML = ``;
+            }
+            
+            //* On ajuste le calcul du total et on l'affiche à l'utilisateur
+            let prix;
+            //! revoir si il reste plus que 1 nours, condition pour 1 ?
+            if (choixNounoursTab.length > 0) {
+                prix = parseInt(choixNounoursTab[i][4]);
+                total -= parseInt(prix);
+            } else {
+                prix = 0;
+                total = 0;
+            }
+            console.log(parseInt(prix));
+            console.log(parseInt(total));
+            totalDiv.innerHTML = `<strong>Total : </strong>${total}€`; //wow, ça fonctionne, ce truc de ouf
+        
+            //// On vide le local storage
+            choixNounoursTab.splice(i, 1);
+            console.log(choixNounoursTab);
+            localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
+            choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
+            console.log(choixNounoursTab);
+            // console.log(choixNounoursTab[i][4]);
+        });
+    }
+}
+
+function CreateCommande () {
+    //* On change le titre en fonction de si une commande a été passée ou pas
+    let h2 = document.querySelector('h2');
+    h2.innerHTML = `Résumé de votre commande`;
+    
+    //* calcul de la quantité totale pour page de confirmation
+    quantiteTotale = 0;
+    for (let i = 0; i < choixNounoursTab.length; i++) {
+        quantiteTotale += parseInt(choixNounoursTab[i][1]);
+        console.log(quantiteTotale);
+    }
+    
+    //* On remet le badge sur le panier
+    let badge = document.querySelector('.badge');
+    if (quantiteTotale == 0) {
+        console.log("quantité totale = 0");
+    } else {
+        badge.innerHTML = `${quantiteTotale}`;
+    }
+    
+    let prixUniteTab = GetPrixPerUnite();
+    
+    // let commandeTab = []; //* pour delete qd click bin
+    
+    let commandeTab = CreateCommandeLines(prixUniteTab); //* pour delete qd click bin
     
     //* On calcule le prix
     let totalDiv = document.getElementById('total');
@@ -144,54 +211,16 @@ if (choixNounoursTab != null) {
     
     //* On retarde cette partie jusqu'à ce que les lignes de commande existent
     setTimeout(() => {
-        //* On repère les bins dans html
-        let binAll = document.querySelectorAll(".bin")
-        // let bin = [];
-        console.log(binAll);
-        //* On parcourt les lignes de commandes (1 commande / case du tableau choixNounoursTab)
-        for (let i = 0; i < choixNounoursTab.length; i++) {
-            //* on capture toutes les bins dans un tableau
-            // bin.push(newCommandeIconAll[i]); 
-            // console.log(bin[i]);
-            console.log(binAll[i]);
-            // console.log(total);
-            // console.log(prixUniteTab);
-            //* Pour chaque bin, on efface la ligne qui lui correspond au click
-            binAll[i].addEventListener('click', function() {
-                console.log(binAll[i]);
-                console.log(commandeTab[i]);
-                commandeTab[i].remove();
-    
-                //* On décrémente le badge dans la nav
-                if (choixNounoursTab.length > 0) {
-                    badge.innerHTML = `${(quantiteTotale - choixNounoursTab[i][1])}`;
-                } else {
-                    badge.innerHTML = ``;
-                }
-    
-                //// On vide le local storage
-                choixNounoursTab.splice(i, 1);
-                console.log(choixNounoursTab);
-                localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
-                choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
-                console.log(choixNounoursTab);
-    
-                //* On ajuste le calcul du total et on l'affiche à l'utilisateur
-                let prix;
-                if (choixNounoursTab.length > 0) {
-                    prix = parseInt(choixNounoursTab[i][4]);
-                    total -= parseInt(prix);
-                } else {
-                    prix = 0;
-                    total = 0;
-                }
-                console.log(parseInt(prix));
-                console.log(parseInt(total));
-                totalDiv.innerHTML = `<strong>Total : </strong>${total}€`; //wow, ça fonctionne, ce truc de ouf
-            });
-        }
+
+        CreateDeleteEventBin(commandeTab, badge, totalDiv);
+       
         // console.log(bin);
     }, 1000);
+}
+
+if (choixNounoursTab != null) {
+
+    CreateCommande();
 
 }
 
