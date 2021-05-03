@@ -210,7 +210,7 @@ async function Affichage() {
     await GetNounours();
     console.log(data);
     // let i = 0;
-
+    let i;
     //* On parcourt les infos renvoyées par fetch
     for (let z = 0; z < data.length; z++) {
         //* On affiche les peluches en fonction du location hash

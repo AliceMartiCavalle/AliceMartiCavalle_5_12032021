@@ -1,38 +1,28 @@
 QUESTIONS
 
-Changer couleur des icones > et < du carrousel
+C'est quoi local storage : 
+    - C'est stocké où concrètement ? Cloud ? Fichiers temps ? Cache ?
+    - Dépend de IP/connexion ? Data de l'ordi aussi sur tel (sans compte client) ?
+    - LocalStorage.clear() efface quoi ? Page courante ? Toutes les infos liées au site ? Sur toutes les plateformes ou juste current device ? Toutes les infos dedans y compris d'autres sites ?
 
-Est-ce que je peux forcer le select de couleur à se remettre sur la 1ère option quand on change de nounours dans la page produit ? J'ai mis en 'selected' dans le html (avec JS) mais l'affichage suit pas.
-
-- Est-ce qu'il y a un moyen de rechercher par num de ligne dans la console ?
-
-- Où est-ce que j'ai un retour d'erreur si je peux pas console.log en nodeJS ?
-
+P6 : Que signifie "la sécurité de la base de données MongoDB (à partir d'un service tel que MongoDB Atlas) doit être faite de telle sorte que le validateur puisse lancer l'application depuis sa machine" ?
 
 PROBLEMES
 
-- cf drapeau 2 & 3 form, fonction delete qd click bin, condition si reste que 1 nounours ?
+Est-ce que je peux forcer le select de couleur à se remettre sur la 1ère option quand on change de nounours dans la page produit ? J'ai mis en 'selected' dans le html (avec JS) mais l'affichage suit pas.
 
 - Si on actualise, on perd la commande en cours, est-ce que c'est un problème (quand on recharge, le choixNounoursTab se réinitialise [ ])
 
 - svg circle pas responsive
 
+
 A FAIRE (EN COURS DE TRAITEMENT)
-
-Form : empêcher validation JS si un truc invalid CSS ?
-
----Mise en page---
-* ACCUEIL : homogénéiser tailles img dans carrousel + défilement auto + bouton stop, pb défilement horizontal
-* écraser les styles bootstrap ? flemme
-* responsive (surtout pour lignes de commande page form)
 
 ---SCSS---
 Mettre de l'ordre
 
 ---JS---
-- Vérifier les champs du formulaire de contact
 - Faire des boucles pour compacter tout ça (en cours)
-<!-- - Calculer la variable prix dans panier.js (251) autrement -->
 - Harmoniser convention de nommage : maj en début de toutes les fonctions (en cours)
 
 
