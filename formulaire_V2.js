@@ -106,6 +106,7 @@ function CreateCommandeLines(prixUniteTab) {
         // let numDeLigne = choixNounoursTab[i][8];
     
         commandeTab.push({newCommande : newCommande, numDeLigne : choixNounoursTab[i][8]}); // pour bin
+        // numDeLigne.push(choixNounoursTab[i][8]); // pour bin
     }
     console.log(commandeTab);
     return commandeTab;
@@ -135,8 +136,13 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
         (function(arg) {
             binAll[i].addEventListener('click', function(e) {
 
-                console.log(e)
-                console.log(e.target)
+                //* efface la ligne de commande qui contient le svg qui a été cliqué
+                //* pas possible d'utiliser ça, pas précis. Impossible de savoir si on clique sur le svg ou la div qui contient le svg
+                //! si on clique sur la div, ça efface le body !
+                // let thisCommandeLine = e.target.parentNode.parentNode.parentNode
+                // console.log(thisCommandeLine)
+                // thisCommandeLine.remove()
+
                 console.log(arg);
                 console.log(i);
                 
@@ -144,8 +150,8 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
                 console.log(binAll[i]);
                 console.log(choixNounoursTab);
                 //? il faut chercher dans choixNounoursTab le nounours par nom
-                console.log(commandeTab[i]);
-                console.log(commandeTab[i].numDeLigne);
+                // console.log(commandeTab[i]);
+                // console.log(commandeTab[i].numDeLigne);
                 // let thisNours = commandeTab[i].querySelector('')
 
                 // tab.filter(item => {return item})
@@ -161,12 +167,16 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
 
 
                 //* On décrémente le badge dans la nav
-                if (choixNounoursTab.length == 0) {
-                    //? pourquoi noursDelete est un tableau dans un tableau ?
+                //* S'il restait un nounours ou aucun : badge est à 0 après le click
+                if (choixNounoursTab.length == 0 || choixNounoursTab.length == 1) {
+                    console.log('badge 0')
                     badge.innerHTML = ``;
-                } else if (choixNounoursTab.length == 1) {
-                    badge.innerHTML = `${choixNounoursTab[0][1]}`;
-                } else {
+                    // } else if (choixNounoursTab.length == 1) {
+                        //     console.log('badge 1')
+                        //     badge.innerHTML = `${choixNounoursTab[0][1]}`;
+                    } else {
+                    console.log('badge else')
+                    //? pourquoi noursDelete est un tableau dans un tableau ?
                     badge.innerHTML = `${(quantiteTotale - noursDelete[0][1])}`;
                 }
                 
@@ -362,11 +372,11 @@ $("#valider").click(function(e) {
 });
 
 //* ajouter tableau avec données utilisateur
-let lastNameInput = document.getElementById('lastName');
-let firstNameInput = document.getElementById('firstName');
-let addressInput = document.getElementById('address');
-let cityInput = document.getElementById('city');
-let emailInput = document.getElementById('email');
+let lastNameInput = document.getElementById('nom');
+let firstNameInput = document.getElementById('prenom');
+let addressInput = document.getElementById('adresse');
+let cityInput = document.getElementById('ville');
+let emailInput = document.getElementById('mail');
 //* bouton
 let valider = document.getElementById('valider');
 //* form
@@ -379,27 +389,61 @@ let formUser = document.getElementById('formUser');
 // let commande;
 //!
 
+let errMsgDiv = document.querySelector('#errMsgDiv');
+errMsgDiv.style.opacity = '0';
+
+let errMsg = errMsgDiv.querySelector('p');
+
 //* vérifie les champs du formulaire
 function verifForm() {
     console.log('FONCTION VERIFFORM');
     
-    let contact = {}; 
-
-    contact.firstName = firstNameInput.value;
-    console.log(contact.firstName);
-    contact.lastName = lastNameInput.value;
-    console.log(contact.lastName);
-    contact.address = addressInput.value;
-    console.log(contact.address);
-    contact.email = emailInput.value;
-    console.log(contact.email);
-    contact.city = cityInput.value;
-    console.log(contact.city);
-
-    //* verif ici
+    let inputs = document.querySelectorAll('input');
+    // console.log(inputs[0]);
+    // const style = getComputedStyle(inputs[0])
+    // console.log(style.backgroundColor);
     
+    console.log(Array.from([1, 2, 3], x => x + x));
 
-    return contact;
+    let checkForm = Array.from(inputs, input => {
+        console.log(input.value);
+        const style = getComputedStyle(input)
+        if (input.value == '') {
+            errMsg.textContent = 'Il manque une information dans le formulaire'
+            errMsgDiv.style.opacity = '1';
+            return false;
+        } else if (style.backgroundColor == 'rgba(212, 3, 3, 0.3)') {
+            console.log(input.id);
+            errMsg.textContent = `Merci de bien vouloir vérifier votre ${input.id} (et toute autre information surlignée en rouge)`
+            errMsgDiv.style.opacity = '1';
+            return false;
+        } else {
+            return true;
+        }
+    })
+
+    console.log(checkForm);
+    if (checkForm) {
+        console.log('ok')
+        let contact = {}; 
+
+        contact.firstName = firstNameInput.value;
+        console.log(contact.firstName);
+        contact.lastName = lastNameInput.value;
+        console.log(contact.lastName);
+        contact.address = addressInput.value;
+        console.log(contact.address);
+        contact.email = emailInput.value;
+        console.log(contact.email);
+        contact.city = cityInput.value;
+        console.log(contact.city);
+
+        return contact;
+    } else {
+        console.log('not ok')
+        return false;
+    }
+    
 };
 
 //* envoie les infos à l'API via fetch : POST
@@ -407,6 +451,7 @@ function postApi () {
     console.log('FONCTION POST API')
 
     let contact = verifForm();
+    console.log(contact);
 
     let products = [];
     for (let i = 0; i < choixNounoursTab.length; i++) {
@@ -446,7 +491,7 @@ function postApi () {
         
             //* On envoie vers la page de confirmation
             setTimeout(function() {
-                document.location.href="confirmation.html"; 
+                // document.location.href="confirmation.html"; 
             }, 300);
         });
     }

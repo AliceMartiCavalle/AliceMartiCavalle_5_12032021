@@ -153,3 +153,8 @@ input:not(:focus):invalid {
     background-color: transparentize(map-get($color, danger), .7);
     // color: red;
 }
+input:not(:focus):valid {
+   
+    background-color: transparentize(map-get($color, primary), .9);
+    // color: red;
+}

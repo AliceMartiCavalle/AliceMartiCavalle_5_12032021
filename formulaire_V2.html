@@ -87,6 +87,17 @@
         Total : 
     </div>
     <h2 class="mt-5">Dites-nous où envoyer vos peluches</h2>
+    <div id="errMsgDiv" class="d-flex align-items-center justify-content-center text-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle mr-3" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+        </svg>
+        <p class="m-0 p-0">test</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle ml-3" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+        </svg>
+    </div>
     <form onsubmit="return postForm()" class="row g-3 position-relative" id="formUser" name="formUser">
         <div class="toast" id="toastForm" data-autohide="true">
             <div class="toast-header">
@@ -103,32 +114,32 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="lastName" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="lastName" autofocus required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Doe">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" autofocus required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Doe">
         </div>
         <div class="col-md-6">
-            <label for="firstName" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="firstName" required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Jeanne">
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" class="form-control" id="prenom" required minlength="3" maxlength="35" pattern="[a-zA-ZÀ-ÿ\s]+" value="Jeanne">
         </div>
 
         <div class="col-12">
-            <label for="address" class="form-label">Adresse</label>
-            <input type="text" class="form-control" id="address" placeholder="N° rue" required minlength="8" maxlength="100" pattern="[a-zA-ZÀ-ÿ0-9\-\., ]+" value="25 rue du bout du monde">
+            <label for="adresse" class="form-label">Adresse</label>
+            <input type="text" class="form-control" id="adresse" placeholder="N° rue" required minlength="8" maxlength="100" pattern="[a-zA-ZÀ-ÿ0-9\-\., ]+" value="25 rue du bout du monde">
         </div>
 
         <div class="col-md-6">
-            <label for="city" class="form-label">Ville</label>
-            <input type="text" class="form-control" id="city" required minlength="3" maxlength="20" pattern="[a-zA-ZÀ-ÿ\-\. ]+" value="Bord du Précipice">
+            <label for="ville" class="form-label">Ville</label>
+            <input type="text" class="form-control" id="ville" required minlength="3" maxlength="20" pattern="[a-zA-ZÀ-ÿ\-\. ]+" value="Bord du Précipice">
         </div>
         
         <div class="col-md-6">
-            <label for="email" class="form-label">Mail</label>
-            <input type="email" class="form-control" id="email" required value="jeanne.doe@gmail.com">
+            <label for="mail" class="form-label">Mail</label>
+            <input type="email" class="form-control" id="mail" required value="jeanne.doe@gmail.com">
         </div>
         
         <div class="col-12 mt-3">
-            <input class="btn btn-primary" type="submit" value="Valider" id="valider" required>
-          <!-- <button type="submit" class="btn btn-primary" id="valider">Valider</button> -->
+            <!-- <input class="btn btn-primary" type="submit" value="Valider" id="valider" required> -->
+          <button type="submit" class="btn btn-primary" id="valider">Valider</button>
         </div>
       </form>
 
