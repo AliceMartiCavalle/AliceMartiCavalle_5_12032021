@@ -60,12 +60,12 @@
                 </div>
             </nav>
         </header>
-        <div class="row">
-            <section class="presentation col-8">
-                <h2>Nos nounours</h2>
+        <div class="row ml-3 d-flex flex-column flex-md-row">
+            <h2 class="col-12">Nos nounours</h2>
+            <section class="presentation col-12 col-md-7 mb-5 mx-auto">
                 <div class="carousel slide px-5 py-0" data-ride="carousel" data-interval="false">
                     <div id="carouselControls" class="carousel slide" data-ride="carousel" data-interval="false">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner border border-primary">
                             <div class="carousel-item active">
                                 <a href="produit.html#5be9c8541c9d440000665243">
                                     <img src="" class="d-block w-100" alt="...">
@@ -98,9 +98,9 @@
                     </div>                    
                 </div>
             </section>
-            <section class="news col-4">
+            <section class="news col-12 col-md-4 mr-5">
                 <div class="boxNews">
-                    <h2>Nouveau teddy <span class="badge badge-primary">NEW !</span></h2>
+                    <h3>Nouveau teddy <span class="badge badge-primary">NEW !</span></h3>
                     <a href="produit.html#5beaacd41c9d440000a57d97" class="text-dark text-decoration-none">
                         <img src="" class="d-block w-100" alt="" />
                         <p>Notre nouveau nounours est impatient de faire votre connaissance et vous guette déjà par la fenêtre !</p>
@@ -110,13 +110,32 @@
                 </div>
             </section>
         </div>
-        <footer class="col-12 mt-3">
-            <a href="mailto:oriteddy@gmail.com" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
-                </svg>
-                Contact
-            </a>
+        <footer class="row p-2 mt-3 mb-n4 d-flex bg-light flex-column flex-md-row align-items-end">
+            <div class="col-12 col-md-6 text-center text-md-left">
+                <div vocab="https://schema.org/" typeof="LocalBusiness">
+                    <span property="name">ORITEDDY : </span>
+                    <span property="description">magasin de peluches</span>
+                
+                    <address property="address" typeof="PostalAddress">
+                        <span property="streetAddress">
+                            3 rue du bout du monde<br>
+                        </span>
+                        <span property="postalCode">00000, </span>
+                        <span property="addressLocality">Bord du Précipice</span>
+                    </address>
+                    <!-- <span property="email">contact@lachouetteagence.com</span><br /> -->
+                    <meta property="openingHours" content="Mo-Fr 09:00-18:00">
+                    Ouvert de 9h à 18h, du lundi au vendredi
+                </div>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-right">
+                <a href="mailto:oriteddy@gmail.com" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                    </svg>
+                    Contact
+                </a>
+            </div>
         </footer>
 
 

@@ -171,6 +171,7 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
                 if (choixNounoursTab.length == 0 || choixNounoursTab.length == 1) {
                     console.log('badge 0')
                     badge.innerHTML = ``;
+                    localStorage.removeItem('numLigneCommande');
                     // } else if (choixNounoursTab.length == 1) {
                         //     console.log('badge 1')
                         //     badge.innerHTML = `${choixNounoursTab[0][1]}`;
@@ -187,6 +188,7 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
                     console.log(noursDelete[0][4])
                     prix = parseInt(noursDelete[0][4]);
                     console.log(prix)
+                    console.log(total)
                     total -= parseInt(prix);
                     console.log(total)
                 } else {
@@ -379,6 +381,8 @@ let cityInput = document.getElementById('ville');
 let emailInput = document.getElementById('mail');
 //* bouton
 let valider = document.getElementById('valider');
+let btnLoading = document.getElementById('loading')
+btnLoading.style.display = 'none'
 //* form
 let formUser = document.getElementById('formUser');
 // let contact = new FormData();
@@ -423,7 +427,9 @@ function verifForm() {
     })
 
     console.log(checkForm);
-    if (checkForm) {
+    console.log(checkForm.includes(false));
+    
+    if (!checkForm.includes(false)) {
         console.log('ok')
         let contact = {}; 
 
@@ -438,20 +444,20 @@ function verifForm() {
         contact.city = cityInput.value;
         console.log(contact.city);
 
-        return contact;
+        postApi(contact);
     } else {
         console.log('not ok')
-        return false;
+        return false; //?
     }
     
 };
 
 //* envoie les infos à l'API via fetch : POST
-function postApi () {
+function postApi(contact)  {
     console.log('FONCTION POST API')
 
-    let contact = verifForm();
-    console.log(contact);
+    // let contact = verifForm();
+    // console.log(contact);
 
     let products = [];
     for (let i = 0; i < choixNounoursTab.length; i++) {
@@ -489,10 +495,14 @@ function postApi () {
             console.log(infosConfirmation);
             localStorage.setItem("infosConfirmation", JSON.stringify(infosConfirmation));
         
+            valider.style.display = 'none';
+            btnLoading.style.display = 'block';
             //* On envoie vers la page de confirmation
+            //* avec un délai sinon ya rien dans local storage
+            // NB : on n'a pas besoin d'un TEL delai, mais maintenant j'ai un super bouton qui tourne ^^
             setTimeout(function() {
-                // document.location.href="confirmation.html"; 
-            }, 300);
+                document.location.href="confirmation.html"; 
+            }, 2000);
         });
     }
     PostNounours();  
@@ -511,7 +521,7 @@ function postForm() {
         console.log('toast', toast);
     }
 
-    postApi();
+    verifForm();
 
     return false; // pour éviter que la page se recharge
 }

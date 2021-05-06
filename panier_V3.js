@@ -143,6 +143,7 @@ function Remplissage(i) {
     // let options = document.querySelectorAll('option');
     // options[0].setAttribute('selected', 'selected');
     couleurSelect.selectedIndex = 0;
+    quantiteSelect.selectedIndex = 0;
 
     fillCircle();        
 }
@@ -509,6 +510,7 @@ function Panier() {
     // let codeProduit = thisNounours()[1];
     // let description = thisNounours()[2];
     numLigneCommande += 1
+    localStorage.setItem("numLigneCommande", JSON.stringify(numLigneCommande));
     choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src, circleColor, numLigneCommande);
     console.log(choixNounours);
 
