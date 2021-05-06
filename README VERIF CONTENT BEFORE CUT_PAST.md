@@ -32,6 +32,7 @@ Mettre de l'ordre
 ---JS---
 utiliser le truc .classList de Bulma pour nav card
 remettre select de quantite a 0 aussi
+prévoir un spinner le temps que la page s'affiche + Albert
 - Vérifier les champs du formulaire de contact
 - Faire des boucles pour compacter tout ça (en cours)
 <!-- - Calculer la variable prix dans panier.js (251) autrement -->

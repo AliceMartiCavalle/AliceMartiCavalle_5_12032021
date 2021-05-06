@@ -380,6 +380,8 @@ function UpdatePopover(quantite) {
      }, 1000)
 }
 
+let numLigneCommande = JSON.parse(localStorage.getItem("numLigneCommande")) || 0;
+console.log(numLigneCommande);
 //* Récupère les choix de l'utilisateur et les stock dans local storage
 function Panier() {
     
@@ -506,7 +508,8 @@ function Panier() {
     console.log(circleColor);
     // let codeProduit = thisNounours()[1];
     // let description = thisNounours()[2];
-    choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src, circleColor);
+    numLigneCommande += 1
+    choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src, circleColor, numLigneCommande);
     console.log(choixNounours);
 
     // //* On envoie/récupère les infos nounours sur local storage

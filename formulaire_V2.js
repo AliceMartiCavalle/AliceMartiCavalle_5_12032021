@@ -102,8 +102,10 @@ function CreateCommandeLines(prixUniteTab) {
         newCommandeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg>`;
         
         commandeAll.appendChild(newCommande);
+
+        // let numDeLigne = choixNounoursTab[i][8];
     
-        commandeTab.push(newCommande); // pour bin
+        commandeTab.push({newCommande : newCommande, numDeLigne : choixNounoursTab[i][8]}); // pour bin
     }
     console.log(commandeTab);
     return commandeTab;
@@ -131,52 +133,84 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
     for (let i = 0; i < binAll.length; i++) {
         console.log(i);
         (function(arg) {
-            binAll[i].addEventListener('click', function() {
+            binAll[i].addEventListener('click', function(e) {
+
+                console.log(e)
+                console.log(e.target)
                 console.log(arg);
                 console.log(i);
                 
                 console.log('BIN');
                 console.log(binAll[i]);
                 console.log(choixNounoursTab);
-                //? i faut chercher dans choixNounoursTab le nounours par nom
+                //? il faut chercher dans choixNounoursTab le nounours par nom
                 console.log(commandeTab[i]);
-                commandeTab[i].remove();
+                console.log(commandeTab[i].numDeLigne);
+                // let thisNours = commandeTab[i].querySelector('')
+
+                // tab.filter(item => {return item})
+                let noursDelete = choixNounoursTab.filter(nours => {
+                    console.log(nours[8])
+                    return nours[8] == commandeTab[i].numDeLigne
+                    // return nours == nom+quantite
+                })
+                console.log(noursDelete);
+
+
+                commandeTab[i].newCommande.remove();
 
 
                 //* On décrémente le badge dans la nav
-                //! revoir si il reste plus que 1 nours, condition pour 1 ?
-                if (choixNounoursTab.length > 0) {
-                    console.log(quantiteTotale);
-                    console.log(choixNounoursTab)
-                    console.log(choixNounoursTab[i][1]);
-                    badge.innerHTML = `${(quantiteTotale - choixNounoursTab[i][1])}`;
-                } else {
+                if (choixNounoursTab.length == 0) {
+                    //? pourquoi noursDelete est un tableau dans un tableau ?
                     badge.innerHTML = ``;
+                } else if (choixNounoursTab.length == 1) {
+                    badge.innerHTML = `${choixNounoursTab[0][1]}`;
+                } else {
+                    badge.innerHTML = `${(quantiteTotale - noursDelete[0][1])}`;
                 }
                 
                 //* On ajuste le calcul du total et on l'affiche à l'utilisateur
                 let prix;
                 //! revoir si il reste plus que 1 nours, condition pour 1 ?
                 if (choixNounoursTab.length > 0) {
-                    prix = parseInt(choixNounoursTab[i][4]);
+                    console.log(noursDelete[0][4])
+                    prix = parseInt(noursDelete[0][4]);
+                    console.log(prix)
                     total -= parseInt(prix);
+                    console.log(total)
                 } else {
                     prix = 0;
                     total = 0;
                 }
                 console.log(parseInt(prix));
                 console.log(parseInt(total));
-                totalDiv.innerHTML = `<strong>Total : </strong>${total}€`; //wow, ça fonctionne, ce truc de ouf
+                totalDiv.innerHTML = `<strong>Total : </strong>${total}€`;
             
                 //// On vide le local storage
                 console.log(choixNounoursTab);
+                console.log(noursDelete);
+                //  tab.filter(item => {return item})
+                choixNounoursTab.filter(nours => {
+                    // console.log(nours[8]);
+                    // console.log(choixNounoursTab.indexOf(nours));
+                    
+                    if (nours == noursDelete[0]) {
+                        console.log(choixNounoursTab.indexOf(nours));
+                        choixNounoursTab.splice(choixNounoursTab.indexOf(nours), 1);
+                    }
+                    
+                })
+                console.log(choixNounoursTab);
 
-                    choixNounoursTab.splice(i, 1);
-                    console.log(choixNounoursTab);
+                // console.log(IndexNoursDelete);
+                    // console.log(choixNounoursTab.indexOf(IndexNoursDelete))
+                    // choixNounoursTab.splice(i, 1); //début + nb de truc à supprimer
+                    // console.log(choixNounoursTab);
                     localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
                     choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
                     console.log(choixNounoursTab);
-                    // console.log(choixNounoursTab[i][4]);
+                    // // console.log(choixNounoursTab[i][4]);
 
 
             }, false);
