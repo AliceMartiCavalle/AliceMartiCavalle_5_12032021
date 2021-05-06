@@ -5,8 +5,6 @@ C'est quoi local storage :
     - Dépend de IP/connexion ? Data de l'ordi aussi sur tel (sans compte client) ?
     - LocalStorage.clear() efface quoi ? Page courante ? Toutes les infos liées au site ? Sur toutes les plateformes ou juste current device ? Toutes les infos dedans y compris d'autres sites ?
 
-P6 : Que signifie "la sécurité de la base de données MongoDB (à partir d'un service tel que MongoDB Atlas) doit être faite de telle sorte que le validateur puisse lancer l'application depuis sa machine" ?
-
 PROBLEMES
 
 Est-ce que je peux forcer le select de couleur à se remettre sur la 1ère option quand on change de nounours dans la page produit ? J'ai mis en 'selected' dans le html (avec JS) mais l'affichage suit pas.

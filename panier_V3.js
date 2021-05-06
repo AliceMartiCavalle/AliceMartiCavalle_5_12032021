@@ -140,8 +140,9 @@ function Remplissage(i) {
     }
     
     //* Par défaut on met le select sur la 1ère option
-    let options = document.querySelectorAll('option');
-    options[0].setAttribute('selected', 'selected');
+    // let options = document.querySelectorAll('option');
+    // options[0].setAttribute('selected', 'selected');
+    couleurSelect.selectedIndex = 0;
 
     fillCircle();        
 }
@@ -161,9 +162,9 @@ function fillCircle(x) {
     small.style.opacity = '0';
 
     let colorsOptions = document.querySelectorAll('#couleurSelect > option');
-    console.log(colorsOptions[couleur].textContent);
+    console.log(colorsOptions[couleurSelect.selectedIndex].textContent);
 
-    let circleColor = colorsOptions[couleur].textContent;
+    let circleColor = colorsOptions[couleurSelect.selectedIndex].textContent;
     console.log(circleColor.toLowerCase().replace(' ', ''));
     //* Si la couleur n'existe pas (cf colors.js)
     if (colourNameToHex(circleColor.toLowerCase().replace(' ', '')) == false) {
@@ -214,15 +215,20 @@ async function Affichage() {
     //* On parcourt les infos renvoyées par fetch
     for (let z = 0; z < data.length; z++) {
         //* On affiche les peluches en fonction du location hash
+        console.log(location.hash);
+        // console.log()
         //* Si location.hash = id de la peluche
         if (location.hash === `#${data[z]._id}`) {
+            console.log('hash = id')
+            i = z
             Remplissage(z);
-        //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
+            //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
         } else if (location.hash === '' || location.hash === '#popover') { //* si on actualise la page
+            console.log('hash = vide || popover') 
             i = 0;
             Remplissage(i);
         } else {
-            console.log('error hash');
+            console.log('Ce n\'est pas le nounours que vous recherchez');
         }
     }
 
@@ -273,15 +279,19 @@ let couleur = 0; //* pour choix par défaut dans le select
 // console.log(colorsOptions[couleur].textContent);
 
 //* Quand l'utilisateur choisit une couleur dans le select
-couleurSelect.addEventListener('change', function() {
+couleurSelect.addEventListener('change', function(e) {
+
+    console.log(e.target.value); // +1 car dans html va de 1 à 4
+    // console.log(e.target.value);
     let colorsOptions = document.querySelectorAll('#couleurSelect > option');
 
-    couleur = couleurSelect.selectedIndex;
-    console.log(couleur);
-    console.log(colorsOptions[couleur].textContent);
+    // couleur = couleurSelect.selectedIndex;
+    // console.log(colorsOptions[2].textContent);
+    // console.log(couleur);
+    console.log(colorsOptions[e.target.value -1].textContent);
 
     //* On remplit le cercle svg en fonction de la couleur
-    fillCircle(colorsOptions[couleur].textContent);
+    fillCircle(colorsOptions[e.target.value -1].textContent);
     
 });
 
@@ -379,48 +389,63 @@ function Panier() {
     let choixNounours = [];
     console.log(couleur);
     let options = document.querySelectorAll('#couleurSelect > option');
-    console.log(options[0]);
-    switch (couleur) {
-        case 0:
-            choixNounours.push(`${options[0].textContent}`); //*choix par défaut
-            break;
-        case 1:
-            choixNounours.push(`${options[1].textContent}`);
-            break;
-        case 2:
-            choixNounours.push(`${options[2].textContent}`);
-            break;
-        case 3:
-            choixNounours.push(`${options[3].textContent}`);
-            break;
-        default:
-            console.log('error couleur')
-            break;
-    }
+    console.log(options[couleurSelect.selectedIndex].textContent);
+
+    choixNounours.push(options[couleurSelect.selectedIndex].textContent)
+    // console.log(options[0]);
+    // switch (couleur) {
+    //     case 0:
+    //         choixNounours.push(`${options[0].textContent}`); //*choix par défaut
+    //         break;
+    //     case 1:
+    //         choixNounours.push(`${options[1].textContent}`);
+    //         break;
+    //     case 2:
+    //         choixNounours.push(`${options[2].textContent}`);
+    //         break;
+    //     case 3:
+    //         choixNounours.push(`${options[3].textContent}`);
+    //         break;
+    //     default:
+    //         console.log('error couleur')
+    //         break;
+    // }
     console.log('couleur : ' + choixNounours);
     
-    switch (quantite) { //*quantite = index du select + 1
-        case 0:
-            choixNounours.push('1'); //* quantité par défaut
-            quantite = 1;
-            break;
-        case 1:
-            choixNounours.push('1');
-            break;
-        case 2:
-            choixNounours.push('2');
-            break;
-        case 3:
-            choixNounours.push('3');
-            break;
-        case 4:
-            choixNounours.push('10'); 
-            quantite = 9; //*car 1 gratuit
-            break;
-        default:
-            console.log('error quantite')
-            break;
+    console.log(quantite)
+    console.log(quantiteSelect);
+    console.log(quantiteSelect.selectedIndex);
+    if (quantiteSelect.selectedIndex == 3) {
+        choixNounours.push('10'); 
+        quantite = 9; //*car 1 gratuit
+    } else {
+        choixNounours.push(quantiteSelect.selectedIndex + 1);
+        quantite = quantiteSelect.selectedIndex + 1;
+        console.log(quantite)
     }
+    console.log(quantite)
+    // switch (quantite) { //*quantite = index du select + 1
+    //     case 0:
+    //         choixNounours.push('1'); //* quantité par défaut
+    //         quantite = 1;
+    //         break;
+    //     case 1:
+    //         choixNounours.push('1');
+    //         break;
+    //     case 2:
+    //         choixNounours.push('2');
+    //         break;
+    //     case 3:
+    //         choixNounours.push('3');
+    //         break;
+    //     case 4:
+    //         choixNounours.push('10'); 
+    //         quantite = 9; //*car 1 gratuit
+    //         break;
+    //     default:
+    //         console.log('error quantite')
+    //         break;
+    // }
 
     console.log('couleur + quantite :' + choixNounours);
 
