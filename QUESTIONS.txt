@@ -1,0 +1,78 @@
+comment envoyer une img jusqu'à mongoDB ?
+
+
+-----HTML :-----
+<label for="img">Image</label>
+<input type="file" name="myImg" id="img">
+
+
+
+-----JS :-----
+enregistrerArticle.addEventListener('click', function(e) {
+    e.preventDefault();
+  
+    const fileInput = document.querySelector('#img');
+    // const formData = new FormData();
+    
+    console.log(fileInput.files[0])
+
+        fetch('http://localhost:3000/api/images', {
+            method: "POST",
+            // headers: 'Content-Type: image/jpeg',
+            body : fileInput.files[0]
+        })
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+    
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+});
+
+
+
+-----NODE JS : multer-config-----
+
+const multer = require('multer');
+
+const MIME_TYPES = {
+'image/jpg': 'jpg',
+'image/jpeg': 'jpg',
+'image/png': 'png'
+};
+  
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, 'images');
+    },
+    filename: (req, file, callback) => {
+        const name = file.originalname.split(' ').join('_');
+        const extension = MIME_TYPES[file.mimetype];
+        callback(null, name + Date.now() + '.' + extension);
+    }
+});
+  
+module.exports = multer({storage: storage}).single('image');
+
+
+
+-----NODE JS : app.js-----
+
+const multer = require('./multer-config');
+
+app.use('/api/images', express.static(path.join(__dirname, 'images')));
+
+app.use('api/images', multer, (req, res, next) => {
+  const imgObject = JSON.parse(req.body.img);
+  console.log(imgObject);
+  delete imgObject._id;
+  const img = new Schema({
+    ...imgObject,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  });
+  img.save()
+    .then(() => res.status(201).json({ message: 'Img enregistrée !'}))
+    .catch(error => res.status(400).json({ error }));
+});

@@ -567,6 +567,8 @@ async function AddToPanier() {
 }
 AddToPanier();
 
+
+
     //! truc à supprimer quand j'aurai une meilleure solution
 //     buttonToast.addEventListener("click", function () {
 //         let choixNounours = [];

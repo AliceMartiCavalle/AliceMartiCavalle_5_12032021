@@ -4,9 +4,12 @@
   "description": "Projet 5 OC",
   "main": "oriteddy.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "sass": "sass --watch ./oriteddy.scss:./css/oriteddy.css"
   },
   "author": "Alice M-C",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.6.3"
+  }
 }
