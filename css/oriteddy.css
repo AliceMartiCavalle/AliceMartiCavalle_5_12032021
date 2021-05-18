@@ -1,0 +1,126 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 50px;
+  width: 50px;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  background-image: none; }
+
+.carousel-control-next-icon:after {
+  content: '>';
+  font-size: 40px;
+  color: #413fbd; }
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 40px;
+  color: #413fbd; }
+
+.carousel-inner {
+  height: 120px; }
+  @media screen and (min-width: 321px) {
+    .carousel-inner {
+      height: 160px; } }
+  @media screen and (min-width: 376px) {
+    .carousel-inner {
+      height: 200px; } }
+  @media screen and (min-width: 426px) {
+    .carousel-inner {
+      height: 250px; } }
+  @media screen and (min-width: 769px) {
+    .carousel-inner {
+      height: 330px; } }
+  @media screen and (min-width: 1025px) {
+    .carousel-inner {
+      height: 520px; } }
+  @media screen and (min-width: 1441px) {
+    .carousel-inner {
+      height: 1000px; } }
+
+.toast {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; }
+
+#imgNavPeluche > div {
+  padding: 0;
+  margin: 0; }
+  #imgNavPeluche > div > img {
+    cursor: pointer;
+    width: 60px;
+    padding: 0;
+    margin: 15px 0 0 15px; }
+
+.nav-item {
+  cursor: pointer; }
+
+.card-body {
+  position: relative;
+  height: 320px; }
+  @media screen and (min-width: 768px) {
+    .card-body {
+      height: 300px; } }
+  @media screen and (min-width: 1024px) {
+    .card-body {
+      height: 270px; } }
+  .card-body > .personnaliser div svg {
+    width: 30px; }
+    @media screen and (max-width: 320px) {
+      .card-body > .personnaliser div svg {
+        width: 50px; } }
+    @media screen and (min-width: 426px) {
+      .card-body > .personnaliser div svg {
+        width: 60px; } }
+    @media screen and (min-width: 768px) {
+      .card-body > .personnaliser div svg {
+        width: 40px; } }
+    @media screen and (min-width: 1024px) {
+      .card-body > .personnaliser div svg {
+        width: 30px; } }
+  .card-body > .bio:nth-child(3) {
+    position: absolute;
+    top: 65px;
+    display: none; }
+  .card-body > .detail:nth-child(4) {
+    position: absolute;
+    top: 65px;
+    display: none; }
+
+.card-footer {
+  position: relative; }
+  .card-footer > a {
+    outline: none;
+    color: black; }
+    .card-footer > a svg {
+      width: 30px;
+      height: 30px;
+      cursor: pointer; }
+      .card-footer > a svg:nth-child(2) {
+        position: absolute;
+        top: 12px;
+        right: 20px;
+        opacity: 0; }
+        .card-footer > a svg:nth-child(2):active {
+          opacity: 1; }
+
+.imgCommande {
+  width: 70px; }
+
+.circle svg {
+  width: 35px; }
+
+.bin:hover {
+  cursor: pointer; }
+
+#toastForm {
+  top: 30%; }
+
+input:not(:focus):invalid {
+  background-color: rgba(212, 3, 3, 0.3); }
+
+input:not(:focus):valid {
+  background-color: rgba(65, 63, 189, 0.1); }
+
+/*# sourceMappingURL=oriteddy.css.map */
