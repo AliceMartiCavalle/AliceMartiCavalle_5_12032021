@@ -39,14 +39,14 @@ function CreateCommandeLines(prixUniteTab) {
         //* nouvelle ligne de commande
         let newCommande = document.createElement("div");
         newCommande.innerHTML = "<div><img /></div><div>nom</div><div>prix</div><div>couleur</div><div>svg</div><div>supr</div>";
-        newCommande.setAttribute("class", "commande row border-bottom border-primary")
+        newCommande.setAttribute("class", "commande row border-bottom border-primary d-flex justify-content-center flex-column flex-lg-row")
         
         //* On sélectionne tous les éléments de la ligne et on remplit un par un
         let newCommandeDiv = newCommande.querySelectorAll('div');
         
         //* img
         let newCommandeImgDiv = newCommandeDiv[0];
-        newCommandeImgDiv.setAttribute("class", "col-2");
+        newCommandeImgDiv.setAttribute("class", "col-8 mx-auto col-lg-2 d-flex justify-content-center");
         let newCommandeImg = newCommandeImgDiv.querySelector("img");
         newCommandeImg.setAttribute("src", choixNounoursTab[i][6]);
         newCommandeImg.setAttribute("class", "imgCommande");
@@ -54,32 +54,32 @@ function CreateCommandeLines(prixUniteTab) {
         
         //* nom
         let newCommandeNom = newCommandeDiv[1];
-        newCommandeNom.setAttribute("class", "col-3 d-flex align-items-center");
+        newCommandeNom.setAttribute("class", "col-8 mx-auto col-lg-3 d-flex align-items-center justify-content-center");
         newCommandeNom.innerHTML = `<strong>Nom : &nbsp;</strong>${choixNounoursTab[i][3]}`;
         // console.log(newCommandeNom);
         
         //* prix
         console.log(prixUniteTab);
         let newCommandePrix = newCommandeDiv[2];
-        newCommandePrix.setAttribute("class", "col-3 d-flex align-items-center");
+        newCommandePrix.setAttribute("class", "col-8 mx-auto col-lg-3 d-flex align-items-center justify-content-center");
         newCommandePrix.innerHTML = `<strong>Prix : &nbsp;</strong>${choixNounoursTab[i][1]} x ${prixUniteTab[i]}€ = ${choixNounoursTab[i][4]}`;
         // console.log(newCommandePrix);
        
         //* couleur
         let newCommandeCouleur = newCommandeDiv[3];
-        newCommandeCouleur.setAttribute("class", "col-2 d-flex align-items-center");
+        newCommandeCouleur.setAttribute("class", "col-8 mx-auto col-lg-2 d-flex align-items-center justify-content-center");
         newCommandeCouleur.innerHTML = `<strong>Couleur : &nbsp;</strong>${choixNounoursTab[i][0]}`;
         // console.log(newCommandeCouleur);
         
         //* svg couleur
         let newCommandeSvg = newCommandeDiv[4];
-        newCommandeSvg.setAttribute("class", "col-1 d-flex align-items-center circle");
+        newCommandeSvg.setAttribute("class", "col-8 mx-auto col-lg-1 d-flex align-items-center circle justify-content-center");
         newCommandeSvg.innerHTML = `<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4" stroke="black" stroke-width="3%" fill="${choixNounoursTab[i][7]}"/></svg>`;
         // console.log(newCommandeSvg);
        
         //* icone poubelle
         let newCommandeIcon = newCommandeDiv[5];
-        newCommandeIcon.setAttribute("class", "col-1 d-flex align-items-center bin");
+        newCommandeIcon.setAttribute("class", "col-8 mx-auto col-lg-1 my-2 my-lg-0 d-flex justify-content-center align-items-center bin");
         newCommandeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg>`;
         
         commandeAll.appendChild(newCommande);
