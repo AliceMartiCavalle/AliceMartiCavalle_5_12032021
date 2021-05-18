@@ -35,7 +35,7 @@ $color : (
 }
 //* fin flèches carrousel
 
-//! grmbl !
+//* fixer taille du carrousel
 .carousel-inner {
     height : 120px;
     @media screen and (min-width: 321px) {
@@ -56,24 +56,8 @@ $color : (
     @media screen and (min-width: 1441px) {
        height: 1000px;
     }
-    // > div a img {
-    // //     object-fit: cover; //fonctionne pas... écraser bootstrap ?
-    // // margin: auto;
-    // }
-}
 
-// h1 a {
-//     text-decoration: none;
-//     color: black;
-//     &:hover {
-//         text-decoration: none;
-//         color: white;
-//     }
-// }
-// .SousTitre {
-//                             border: 1px solid #000;
-//     font-size: .8em;
-// }
+}
 
 //* PAGE PRODUIT
 .toast {
@@ -100,8 +84,6 @@ $color : (
     cursor : pointer;
 }
 .card-body { 
-    //? je pige rien à cette histoire de z-index. Comment je mets personnaliser par-dessus ?
-    // border: 1px solid #000;
     position: relative;
     height: 320px;
     @media screen and (min-width: 768px) {
@@ -110,75 +92,58 @@ $color : (
     @media screen and (min-width: 1024px) {
         height : 270px;
     }
-    // z-index: 1;
     > .personnaliser div svg {
-                            
-        // border: 1px solid blue;
         @media screen and (max-width: 320px) {
             width: 50px;
         }
         width: 30px;
-        // height : 100px;
         @media screen and (min-width: 426px) {
             width: 60px;
-            // height : 50px;
         }
         @media screen and (min-width: 768px) {
             width: 40px;
-            // height : 50px;
         }
         @media screen and (min-width: 1024px) {
             width : 30px;
-            // height : 30px
         }
-        // stroke-width: 5px;
-        // stroke: green;
-        // z-index: 2;
     }
     > .bio:nth-child(3) {
-                                        // border: 1px solid red;
         position: absolute;
         top: 65px;
-        // opacity: 0;
-        // z-index: -1;
         display: none;
     }
     > .detail:nth-child(4) {
-                                        // border: 1px solid blue;
         position: absolute;
         top: 65px;
-        // opacity: 0;
-        // z-index: -1;
         display: none;
     }
 }
-#cardText {
-    > svg {
-        width: 20px;
-        margin: 0 5px 0 20px;
-        // border: 1px solid #000;
-        &:hover {
-            cursor: pointer;
-        }
-        &:nth-child(2) path {
-            fill: rgb(155, 76, 20);
-        }
-        &:nth-child(3) {
-            outline: 1px solid map-get($color, dark);
-            outline-offset: 2px;
-            > path {
-                fill: rgb(223, 144, 27);
-                // stroke: blue;
-                // stroke-width: 1%;
-            }
-        }
-        &:nth-child(4) path {
-            fill: sandybrown;
-        }
-    }
-}
+// #cardText {
+//     > svg {
+//         width: 20px;
+//         margin: 0 5px 0 20px;
+//         // border: 1px solid #000;
+//         &:hover {
+//             cursor: pointer;
+//         }
+//         &:nth-child(2) path {
+//             fill: rgb(155, 76, 20);
+//         }
+//         &:nth-child(3) {
+//             outline: 1px solid map-get($color, dark);
+//             outline-offset: 2px;
+//             > path {
+//                 fill: rgb(223, 144, 27);
+//                 // stroke: blue;
+//                 // stroke-width: 1%;
+//             }
+//         }
+//         &:nth-child(4) path {
+//             fill: sandybrown;
+//         }
+//     }
+// }
 .card-footer {
-                            // border: 1px solid #000;
     position: relative;
     > a {
         outline: none; //* sinon cadre moche au chargement de la page
@@ -205,9 +170,7 @@ $color : (
     width: 70px;
 }
 .circle svg {
-    // border: 1px solid #000;couleurSelect.selectedIndex
     width: 35px;
-    // height: 10px;
 }
 .bin:hover {
     cursor : pointer;

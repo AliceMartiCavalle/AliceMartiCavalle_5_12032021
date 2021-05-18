@@ -1,8 +1,11 @@
 QUESTIONS
 
 fetch : post img ?? cf fichier questions.txt
-homogénéiser taille img carrousel
+Mais d'où vient ce petit tiret bleu quand je hover sur le carrousel ??? (accueil)
+<!-- homogénéiser taille img carrousel -->
 mon script sass rame à mort -__-
+
+Err console : uncaught (in promise) ?
 
 <!-- Changer couleur des icones > et < du carrousel -->
 
@@ -19,7 +22,7 @@ PROBLEMES
 
 - Si on actualise, on perd la commande en cours, est-ce que c'est un problème (quand on recharge, le choixNounoursTab se réinitialise [ ])
 
-- svg circle pas responsive
+<!-- - svg circle pas responsive -->
 
 ---Accueil---
 Mais d'où vient ce petit tiret bleu quand je hover sur le carrousel ???
@@ -31,17 +34,17 @@ A FAIRE (EN COURS DE TRAITEMENT)
 ---Mise en page---
 * ACCUEIL : homogénéiser tailles img dans carrousel + défilement auto + bouton stop, pb défilement horizontal
 * écraser les styles bootstrap ? flemme
-* responsive (surtout pour lignes de commande page form)
+<!-- * responsive (surtout pour lignes de commande page form) -->
 
 ---SCSS---
-Mettre de l'ordre
+<!-- Mettre de l'ordre -->
 
 ---JS---
-utiliser le truc .classList de Bulma pour nav card
+utiliser le truc .classList de Bulma pour nav card, flemme
 <!-- remettre select de quantite a 0 aussi -->
-prévoir un spinner le temps que la page s'affiche + Albert
+prévoir un spinner le temps que la page s'affiche + Albert ? flemme
 <!-- - Vérifier les champs du formulaire de contact -->
-- Faire des boucles pour compacter tout ça (en cours)
+<!-- - Faire des boucles pour compacter tout ça (en cours) -->
 <!-- - Calculer la variable prix dans panier.js (251) autrement -->
 - Harmoniser convention de nommage : maj en début de toutes les fonctions (en cours)
 

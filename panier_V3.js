@@ -41,16 +41,18 @@ async function NavImg() {
     }
     // console.log(DivImgNavPeluche);
 
-    let imgNavPeluche = DivImgNavPeluche.querySelectorAll('img');
     // console.log(imgNavPeluche);
-    // console.log(imgNavPeluche[0]);
-
+    
     //* on crée un add event listener sur chaque img de peluche
-    for (y = 0; y <= mesNours.length; y++) {
+    let imgNavPeluche = DivImgNavPeluche.querySelectorAll('img');
+    
+    for (y = 0; y < mesNours.length; y++) {
         // console.log(i);
         (function(arg) {
+            console.log(y);
+
             //* Si l'utilisateur clique sur une autre peluche, on l'affiche
-            imgNavPeluche[y].addEventListener('click', function() {
+            imgNavPeluche[arg].addEventListener('click', function() {
                 console.log('%c btn img nav peluche', btn);
                 // console.log(arg);
 
@@ -214,7 +216,7 @@ async function Affichage() {
     } 
 
 }
-Affichage();
+// Affichage();
 
 
 
@@ -271,8 +273,8 @@ let quantitePanier = 0;
 //* On calcule le nombre de nounours actuellement dans le panier
 for (let i = 0; i < choixNounoursTab.length; i++) {
     quantitePanier += parseInt(choixNounoursTab[i][1]);
-    console.log(quantitePanier);
 }
+console.log(quantitePanier);
 //* On indique cette info dans le popover et le badge
 if (quantitePanier > 0) {
     badge.innerHTML = `${quantitePanier}`;
