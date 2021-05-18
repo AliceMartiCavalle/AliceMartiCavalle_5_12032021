@@ -2,6 +2,7 @@ QUESTIONS
 
 fetch : post img ?? cf fichier questions.txt
 homogénéiser taille img carrousel
+mon script sass rame à mort -__-
 
 <!-- Changer couleur des icones > et < du carrousel -->
 

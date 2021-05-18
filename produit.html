@@ -67,11 +67,7 @@
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#imgNavPeluche" id="autrePeluche">Voir une autre peluche !</button>
             <div id="imgNavPeluche" class="panel-collapse collapse">
                 <div class="list-group d-flex flex-column flex-sm-row">
-                    <img src="" alt="" class="list-group-item">
-                    <img src="" alt="" class="list-group-item">
-                    <img src="" alt="" class="list-group-item">
-                    <img src="" alt="" class="list-group-item">
-                    <img src="" alt="" class="list-group-item">
+                    <!-- <img src="" alt="" class="list-group-item"> -->
                 </div>
             </div>
         </div>
@@ -95,8 +91,8 @@
                     <h3 class="card-title text-center" id="namePeluche">Albert</h3>
                     <div class="personnaliser">
                         <div class="d-flex align-items-start mt-5">
-                            <p><strong>Choisissez une couleur : &nbsp;</strong></p>
-                            <select class="form-select" id="couleurSelect" aria-label="">
+                            <p><strong>Choisissez une couleur : </strong></p>
+                            <select class="form-select mx-1" id="couleurSelect" aria-label="">
                                 <!-- <option value="1" selected>c1</option>
                                 <option value="2">c2</option>
                                 <option value="3">c3</option>
@@ -109,7 +105,7 @@
                             <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" class="ml-2">
                                 <circle cx="5" cy="5" r="4" stroke="black" stroke-width="3%" />
                             </svg>
-                            <small>(visualisation bientôt disponible)</small>
+                            <small>(bientôt disponible)</small>
                         </div>
                         <div class="d-flex align-items-start mt-5">
                             <p><strong>Choisissez une quantité : &nbsp;</strong></p>
@@ -159,6 +155,33 @@
             </div>
         </div>
     </div>
+    <footer class="row p-2 mt-3 mb-n4 d-flex bg-light flex-column flex-md-row align-items-end">
+        <div class="col-12 col-md-6 text-center text-md-left">
+            <div vocab="https://schema.org/" typeof="LocalBusiness">
+                <span property="name">ORITEDDY : </span>
+                <span property="description">magasin de peluches</span>
+            
+                <address property="address" typeof="PostalAddress">
+                    <span property="streetAddress">
+                        3 rue du bout du monde<br>
+                    </span>
+                    <span property="postalCode">00000, </span>
+                    <span property="addressLocality">Bord du Précipice</span>
+                </address>
+                <!-- <span property="email">contact@lachouetteagence.com</span><br /> -->
+                <meta property="openingHours" content="Mo-Fr 09:00-18:00">
+                Ouvert de 9h à 18h, du lundi au vendredi
+            </div>
+        </div>
+        <div class="col-12 col-md-6 text-center text-md-right">
+            <a href="mailto:oriteddy@gmail.com" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                </svg>
+                Contact
+            </a>
+        </div>
+    </footer>
      
     <script
     src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -179,6 +202,7 @@
   ></script>
   
   <!-- <script src="GETinfosNounours.js" type="text/javascript"></script> -->
+  <script src="codeCouleur.js"></script>
   <script src="GETinfosNounoursV2.js" type="text/javascript"></script>
   <script src="colors.js" type="text/javascript"></script>
   <script src="panier_V3.js" type="text/javascript"></script>

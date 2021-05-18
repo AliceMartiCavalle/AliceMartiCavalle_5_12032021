@@ -37,9 +37,9 @@ $color : (
 
 //! grmbl !
 // .carousel-inner {
-//     height : 300px;
+//     width : 300px;
 //     > div a img {
-//         object-fit: fill;
+//         object-fit: cover;
 //     }
 // }
 
@@ -84,17 +84,36 @@ $color : (
     //? je pige rien à cette histoire de z-index. Comment je mets personnaliser par-dessus ?
     // border: 1px solid #000;
     position: relative;
-    height: 250px;
+    height: 320px;
+    @media screen and (min-width: 768px) {
+        height : 300px;
+    }
+    @media screen and (min-width: 1024px) {
+        height : 270px;
+    }
     // z-index: 1;
-    & .personnaliser div svg{
+    > .personnaliser div svg {
                             
-        // border: 5px solid red;
-        width: 25px;
+        border: 1px solid blue;
+        width: 30px;
+        // height : 100px;
+        @media screen and (max-width: 375px) {
+            width: 60px;
+            // height : 50px;
+        }
+        @media screen and (min-width: 768px) {
+            width: 40px;
+            // height : 50px;
+        }
+        @media screen and (min-width: 1024px) {
+            width : 30px;
+            // height : 30px
+        }
         // stroke-width: 5px;
         // stroke: green;
         // z-index: 2;
     }
-    & .bio:nth-child(3) {
+    > .bio:nth-child(3) {
                                         // border: 1px solid red;
         position: absolute;
         top: 65px;
@@ -102,7 +121,7 @@ $color : (
         // z-index: -1;
         display: none;
     }
-    & .detail:nth-child(4) {
+    > .detail:nth-child(4) {
                                         // border: 1px solid blue;
         position: absolute;
         top: 65px;

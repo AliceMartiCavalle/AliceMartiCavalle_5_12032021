@@ -1,57 +1,64 @@
 //* RECUPERER INFOS NOUNOURS SUR BASE DE DONNEES
 
 //*On déclare réponse en dehors de la requête afin de pouvoir l'utiliser ensuite
-let data;
+// let data;
 
 //*On récupère les infos nounours sur la base de données
+// const GetNounours = async function() {
+//     fetch('https://projet-oc-5.herokuapp.com/api/teddies')
+
+//         .then((response) => response.json())
+//         .then((json) => {
+//             console.log(json);
+//             LogData(json);
+//             data = json;
+//             return json
+//         })
+//         .catch((e) => console.error(e.stack))     
+// }
+// GetNounours();
 const GetNounours = async function() {
-    await fetch('https://projet-oc-5.herokuapp.com/api/teddies')
-        // .then((response) => {
-        //     response.json();
-        //     console.log(response);
-        //     // console.log(response.json());
-        //     // if (response.ok) {
-        //     //     let data = await response.json()
-        //     //     console.log(data);
-        //     // }
-        // })
-        .then((response) => response.json())
-        .then((json) => {
-            console.log(json);
-            LogData(json);
-            data = json;
-        })
-            //             console.log(json);
-        .catch((e) => console.error(e.stack))
-        // if (response.ok) {
-        //     let data125 = await response.json()
-        //     console.log(data125);
-        // }
-        
+
+    const res = await fetch('https://projet-oc-5.herokuapp.com/api/teddies');
+    const data = await res.json();
+    LogData(data); //! à supprimer ensuite
+    return data;
+           
 }
 GetNounours();
+
+//! test fonctionnel
+// async function Test() {
+
+//     // const res = await 
+//     let mesNours = await GetNounours();
+//     console.log('%c Test ', fctw, mesNours);
+    
+// }
+// Test();
+//! jusqu'ici
 
 //* On affiche les données pour avoir une idée de ce qu'il y a dedans
 async function LogData(data) {
     console.log(data) //contient infos nounours
 
-    console.log(data[0]) //Norbert
-    console.log(data[1]) //Arnold
-    console.log(data[2]) //LennyCarl
-    console.log(data[3]) //Gustav
-    console.log(data[4]) //Garfunkel
-    // détails de Norbert
-    console.log(data[0].colors)
-    console.log(data[0].description)
-    console.log(data[0].imageUrl)
-    console.log(data[0].name)
-    console.log(data[0].price)
-    console.log(data[0]._id)
-    // Détails de couleurs Norbert
-    console.log(data[0].colors[0])
-    console.log(data[0].colors[1])
-    console.log(data[0].colors[2])
-    console.log(data[0].colors[3])
+    // console.log(data[0]) //Norbert
+    // console.log(data[1]) //Arnold
+    // console.log(data[2]) //LennyCarl
+    // console.log(data[3]) //Gustav
+    // console.log(data[4]) //Garfunkel
+    // // détails de Norbert
+    // console.log(data[0].colors)
+    // console.log(data[0].description)
+    // console.log(data[0].imageUrl)
+    // console.log(data[0].name)
+    // console.log(data[0].price)
+    // console.log(data[0]._id)
+    // // Détails de couleurs Norbert
+    // console.log(data[0].colors[0])
+    // console.log(data[0].colors[1])
+    // console.log(data[0].colors[2])
+    // console.log(data[0].colors[3])
 
 }
 // LogData();

@@ -2,18 +2,30 @@
 
 //* AFFICHAGE PAGE D'ACCUEIL
 
-let imgs = document.querySelectorAll('img');
+let carousel = document.querySelector('#carouselControls > div');
 
 async function afficheNounours() {
+    console.log('%c AFFICHE NOUNOURS ', fct);
+
     //* On attend le retour de fetch
-    await GetNounours();
+    let data = await GetNounours();
 
     console.log(data);
+    
     //* On remplit avec les img renvoyées par l'API
     console.log(data[0].imageUrl);
-    for (let i = 0; i < imgs.length; i++) {
-        imgs[i].src = data[i].imageUrl
+    for (let i = 0; i < data.length; i++) {
+        // imgs[i].src = data[i].imageUrl
+        let newImg = document.createElement("div");
+        if (i == 0) {
+            newImg.setAttribute("class", "carousel-item active"); 
+        } else {
+            newImg.setAttribute("class", "carousel-item"); 
+        }
+        newImg.innerHTML = `<a href="produit.html?id=${data[i]._id}"><img src="${data[i].imageUrl}" class="d-block w-100" alt="Photo de ${data[i].name}, ours en peluche"></a>`
+        carousel.appendChild(newImg)  
     }
+    console.log(carousel);
 }
 afficheNounours();
 

@@ -8,30 +8,58 @@ $(document).ready(function(){
 });
 let toasts = document.getElementsByClassName('toast');
 let toast = toasts[0];
-// toast.setAttribute('data-autohide', 'false');
 
 //* BOOTSTRAP_PILL : on récupère l'emplacement html
 let badge = document.querySelector('.badge');
 
 //* BOOTSTRAP_POPOVER : (utilisé aussi quand on clique sur l'icone cart)
 let popover = document.querySelector('#popover');
-// popover.setAttribute('data-content', `0`);
 
 
 
 //* NAVIGUER D'UNE PELUCHE A L'AUTRE
 
-//* On capture emplacements des img de peluche sous le bouton "voir une autre peluche"
-let DivImgNavPeluche = document.getElementById('imgNavPeluche');
-let imgNavPeluche = document.querySelectorAll('#imgNavPeluche > div > img');
+let DivImgNavPeluche = document.querySelector('#imgNavPeluche > div');
 
-//* et on remplit avec les images des peluches
+//* Crée une nav sous le bouton voir une autre peluche
 async function NavImg() {
+    console.log('%c NAV IMG ', fct);
+
     //* On attend d'avoir les infos nounours
-    await GetNounours();
-    for (let x = 0; x < data.length; x++) {
-        imgNavPeluche[x].src = data[x].imageUrl;
+    let mesNours = await GetNounours();
+
+    //* Pour chaque peluche, on crée une img dans la nav
+    for (let x = 0; x < mesNours.length; x++) {
+
+        let newImg = document.createElement('img');
+        newImg.setAttribute('src', `${mesNours[x].imageUrl}`);
+        newImg.setAttribute('alt', `${mesNours[x].name}`);
+        newImg.setAttribute('class', `list-group-item`);
+
+        DivImgNavPeluche.appendChild(newImg);
+
     }
+    // console.log(DivImgNavPeluche);
+
+    let imgNavPeluche = DivImgNavPeluche.querySelectorAll('img');
+    // console.log(imgNavPeluche);
+    // console.log(imgNavPeluche[0]);
+
+    //* on crée un add event listener sur chaque img de peluche
+    for (y = 0; y <= mesNours.length; y++) {
+        // console.log(i);
+        (function(arg) {
+            //* Si l'utilisateur clique sur une autre peluche, on l'affiche
+            imgNavPeluche[y].addEventListener('click', function() {
+                console.log('%c btn img nav peluche', btn);
+                // console.log(arg);
+
+                Remplissage(mesNours[arg]);
+            }, false);
+            console.log(arg); // s'incrémente
+        })(y);
+    }
+
 }
 NavImg();
 
@@ -48,17 +76,10 @@ let personnaliser = contenuCard[0];
 let bio = contenuCard[1];
 let detail = contenuCard[2];
 
-// personnaliser.style.border = "1px solid green";
-// bio.style.border = "1px solid blue";
-// detail.style.border = "1px solid red";
-
 //* quand on clique sur les onglets, afficher contenu onglet et masquer les autres
 //* + passer onglet en active
 //! Je fais pas de boucle parce que fuck it, ya que 3 onglets
 cardPerso.addEventListener('click', function() {
-    // personnaliser.style.opacity = "1";
-    // bio.style.opacity = "0";
-    // detail.style.opacity = "0";
     personnaliser.style.display = "block";
     bio.style.display = "none";
     detail.style.display = "none";
@@ -67,9 +88,6 @@ cardPerso.addEventListener('click', function() {
     cardDetail.setAttribute('class', 'nav-link');
 });
 cardBio.addEventListener('click', function() {
-    // personnaliser.style.opacity = "0";
-    // bio.style.opacity = "1";
-    // detail.style.opacity = "0";
     personnaliser.style.display = "none";
     bio.style.display = "block";
     detail.style.display = "none";
@@ -78,9 +96,6 @@ cardBio.addEventListener('click', function() {
     cardDetail.setAttribute('class', 'nav-link');
 });
 cardDetail.addEventListener('click', function() {
-    // personnaliser.style.opacity = "0";
-    // bio.style.opacity = "0";
-    // detail.style.opacity = "1";
     personnaliser.style.display = "none";
     bio.style.display = "none";
     detail.style.display = "block";
@@ -113,28 +128,28 @@ let imgPeluche = document.getElementById('imgPeluche');
 let options = document.querySelectorAll('#couleurSelect > option');
 
 //* On remplit les emplacements
-function Remplissage(i) {
-    console.log('REMPLISSAGE');
+function Remplissage(data) {
+    console.log('%c REMPLISSAGE ', fct);
 
-    console.log(i);
+    // console.log(i);
     console.log(data);
-    nom.textContent = data[i].name;
-    imgPeluche.src = data[i].imageUrl
-    codeProduitTag.innerHTML = `<p><em>Code produit : </em>${data[i]._id}</p>`;
-    descriptionTag.innerHTML = `<p><em>Description : </em>${data[i].description}</p>`;
+    nom.textContent = data.name;
+    imgPeluche.src = data.imageUrl
+    codeProduitTag.innerHTML = `<p><em>Code produit : </em>${data._id}</p>`;
+    descriptionTag.innerHTML = `<p><em>Description : </em>${data.description}</p>`;
 
     //* On affiche le prix sans les 00 et avec €
-    prixTag.innerHTML = `<p><em>Prix : </em>${data[i].price / 100}€</p>`;    
+    prixTag.innerHTML = `<p><em>Prix : </em>${data.price / 100}€</p>`;    
     
     //* On parcourt les couleurs, pour chaque couleur on remplit une option du select
-    console.log(data[i].colors.length);
+    console.log(data.colors.length);
     let couleurSelect = document.querySelector('#couleurSelect');
     couleurSelect.innerHTML = '';
     console.log(couleurSelect);
-    for (let y = 0; y < data[i].colors.length; y++) { 
+    for (let y = 0; y < data.colors.length; y++) { 
         let newOption = document.createElement("option");
         // <option value="1" selected>c1</option>
-        newOption.innerHTML = data[i].colors[y];
+        newOption.innerHTML = data.colors[y];
         newOption.setAttribute("value", `${(y+1)}`)
         couleurSelect.appendChild(newOption);
     }
@@ -149,105 +164,150 @@ function Remplissage(i) {
 }
 
 function fillCircle(x) {
-    console.log('FILL_CIRCLE');
-
-    // console.log(x);
-    //* par défaut on affiche la 1ère couleur du sélect
-    //* ça évite que l'utilisateur tombe sur l'option "à venir" du select et le small d'erreur "visualisation bientôt dispo"
-    // if (x == 'default') { 
-    //     couleur = 0;
-    // }
+    console.log('%c FILL CIRCLE ', fct);
 
     //* Par défaut on cache le cercle svg et on affiche le message small
     circle.style.opacity = '1';
     small.style.opacity = '0';
 
     let colorsOptions = document.querySelectorAll('#couleurSelect > option');
-    console.log(colorsOptions[couleurSelect.selectedIndex].textContent);
+    // console.log(colorsOptions[couleurSelect.selectedIndex].textContent);
 
     let circleColor = colorsOptions[couleurSelect.selectedIndex].textContent;
-    console.log(circleColor.toLowerCase().replace(' ', ''));
+    // console.log(circleColor.toLowerCase().replace(' ', ''));
     //* Si la couleur n'existe pas (cf colors.js)
     if (colourNameToHex(circleColor.toLowerCase().replace(' ', '')) == false) {
         
         //* Si la couleur dans la base de donnée commence par Pale ou Dark
         if (circleColor.startsWith('Pale')) {
-            console.log(circleColor);
+            // console.log(circleColor);
             //* On convertit le nom en code couleur (cf colors.js)
             circleColor = colourNameToHex(circleColor.replace('Pale ', '').toLowerCase());
-            console.log(circleColor);
+            // console.log(circleColor);
             //* On lighten/darken la couleur (cf colors.js)
             circleColor = LightenDarkenColor(circleColor.replace('#', ''), 30);
-            console.log(circleColor);
+            // console.log(circleColor);
             circleColor = `#${circleColor}`;
             circle.style.fill = circleColor;
             // circle.style.fill = `#${circleColor}`; //* non : la couleur doit être utilisable directement dans page form
-            console.log(circle);
+            // console.log(circle);
             
         } else if (circleColor.startsWith('Dark')) {
-            console.log(circleColor);
+            // console.log(circleColor);
             circleColor = colourNameToHex(circleColor.replace('Dark ', '').toLowerCase());
-            console.log(circleColor);
+            // console.log(circleColor);
             circleColor = LightenDarkenColor(circleColor.replace('#', ''), -20);
-            console.log(circleColor);
+            // console.log(circleColor);
             circleColor = `#${circleColor}`;
             circle.style.fill = circleColor;
-            console.log(circle);
+            // console.log(circle);
         }
     } else if (circleColor == undefined) { //? utile ?
         circle.style.opacity = '0';
         small.style.opacity = '1';
     } else {
-        console.log(circleColor);
+        // console.log(circleColor);
         circle.style.fill = circleColor.replace(' ', '').toLowerCase();
-        console.log(circle);
+        // console.log(circle);
     }
     console.log(circleColor);
     return circleColor.replace(' ', '').toLowerCase();
 }
 
+
+const GetOneNounours = async function(thisId) {
+
+    // await fetch(`https://projet-oc-5.herokuapp.com/api/teddies/${thisId}`)
+
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //         console.log(json);
+    //         Remplissage(json);
+    //         return json;
+    //     })
+    //     .catch((e) => console.error(e.stack))
+    console.log(thisId);
+    const res = await fetch(`https://projet-oc-5.herokuapp.com/api/teddies/${thisId}`);
+    const data = await res.json();
+    return data;
+       
+}
+// GetOneNounours();
+
 //* On remplit la page avec les infos des nounours
 async function Affichage() {
-    //* on attend d'avoir récupéré les infos nounours
-    await GetNounours();
-    console.log(data);
-    // let i = 0;
-    let i;
-    //* On parcourt les infos renvoyées par fetch
-    for (let z = 0; z < data.length; z++) {
-        //* On affiche les peluches en fonction du location hash
-        console.log(location.hash);
-        // console.log()
-        //* Si location.hash = id de la peluche
-        if (location.hash === `#${data[z]._id}`) {
-            console.log('hash = id')
-            i = z
-            Remplissage(z);
-            //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
-        } else if (location.hash === '' || location.hash === '#popover') { //* si on actualise la page
-            console.log('hash = vide || popover') 
-            i = 0;
-            Remplissage(i);
-        } else {
-            console.log('Ce n\'est pas le nounours que vous recherchez');
-        }
-    }
+    console.log(location.search.replace('?id=', ''));
 
-    //* Si l'utilisateur clique sur une autre peluche, on l'affiche
-    //? What the fuck is happening here 
-    for (y = 0; y <= data.length; y++) {
-        console.log(i);
-        (function(arg) {
-            imgNavPeluche[i].addEventListener('click', function() {
-                console.log(arg);
-                i = arg - 1;
-                Remplissage(i);
-                console.log(i);
-            }, false);
-            console.log(arg); // s'incrémente
-            i = arg;
-        })(y);
+    // let myNours = await GetOneNounours(location.search.replace('?id=', ''));
+    // console.log(myNours);
+
+    //* Si l'utilisateur a cliqué sur peluches dans nav
+    if (location.search == '') {
+        //* On affiche norbert par défaut
+        // GetOneNounours('5be9c8541c9d440000665243');
+        // let myNours = await GetOneNounours('5be9c8541c9d440000665243');
+        // console.log('%cmyNours', vrb, myNours)
+        Remplissage(await GetOneNounours('5be9c8541c9d440000665243'))
+    } else {
+        //* On affiche la peluche en fonction de l'id
+        // GetOneNounours(location.search.replace('?id=', ''));
+        // let myNours = await GetOneNounours(location.search.replace('?id=', ''));
+        // console.log('%cmyNours', vrb, myNours)
+        Remplissage(await GetOneNounours(location.search.replace('?id=', '')))
     }
+    
+   
+
+    //! fonctionne
+    // //* on attend d'avoir récupéré les infos nounours
+    // await GetNounours();
+    // console.log(data);
+    // // let i = 0;
+    // let i;
+    // //* On parcourt les infos renvoyées par fetch
+    // for (let z = 0; z < data.length; z++) {
+    //     //* On affiche les peluches en fonction du location hash
+    //     // console.log()
+    //     //* Si location.hash = id de la peluche
+    //     if (location.hash === `#${data[z]._id}`) {
+    //         console.log('hash = id')
+    //         i = z
+    //         Remplissage(z);
+    //         //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
+    //     } else if (location.hash === '' || location.hash === '#popover') { //* si on actualise la page
+    //         console.log('hash = vide || popover') 
+    //         i = 0;
+    //         Remplissage(i);
+    //     } else {
+    //         console.log('Ce n\'est pas le nounours que vous recherchez');
+    //     }
+    // }
+    //! jusqu'ici
+
+    // await NavImg();
+    // let imgNavPeluche = document.querySelectorAll('#imgNavPeluche > div > img');
+    // console.log(imgNavPeluche);
+    // console.log(imgNavPeluche[0]);
+    // //* Si l'utilisateur clique sur une autre peluche, on l'affiche
+    // let data = await GetNounours();
+    // // await GetNounours();
+    // console.log(data);
+    // //? What the fuck is happening here 
+    // // let i = 0;
+    // for (y = 0; y <= data.length; y++) {
+    //     // console.log(i);
+    //     (function(arg) {
+    //         imgNavPeluche[y].addEventListener('click', function() {
+    //             console.log('% btn img nav peluche', btn);
+    //             console.log(arg);
+    //             console.log(y);
+    //             // i = arg;
+    //             Remplissage(y);
+    //         }, false);
+    //         console.log(arg); // s'incrémente
+    //         // i = arg;
+    //     })(y);
+    // }
 }
 Affichage();
 
@@ -384,7 +444,7 @@ function UpdatePopover(quantite) {
 let numLigneCommande = JSON.parse(localStorage.getItem("numLigneCommande")) || 0;
 console.log(numLigneCommande);
 //* Récupère les choix de l'utilisateur et les stock dans local storage
-function Panier() {
+async function Panier() {
     
     //* on ajoute le choix de l'utilisateur au panier :
 
@@ -463,9 +523,10 @@ function Panier() {
     // console.log(quantite);
 
     //* On rentabilise fetch
-    console.log(nom);
-    console.log(data);
     // console.log(data[0].id);
+    console.log(nom);
+    let data = await GetNounours();
+    console.log(data);
     
     let prix;
     let codeProduit;
