@@ -36,12 +36,31 @@ $color : (
 //* fin flèches carrousel
 
 //! grmbl !
-// .carousel-inner {
-//     width : 300px;
-//     > div a img {
-//         object-fit: cover;
-//     }
-// }
+.carousel-inner {
+    height : 120px;
+    @media screen and (min-width: 321px) {
+        height : 160px;
+    }
+    @media screen and (min-width: 376px) {
+        height : 200px;
+    }
+    @media screen and (min-width: 426px) {
+        height : 250px;
+    }
+    @media screen and (min-width: 769px) {
+        height : 330px;
+    }
+    @media screen and (min-width: 1025px) {
+        height : 520px;
+    }
+    @media screen and (min-width: 1441px) {
+       height: 1000px;
+    }
+    // > div a img {
+    // //     object-fit: cover; //fonctionne pas... écraser bootstrap ?
+    // // margin: auto;
+    // }
+}
 
 // h1 a {
 //     text-decoration: none;
@@ -94,10 +113,13 @@ $color : (
     // z-index: 1;
     > .personnaliser div svg {
                             
-        border: 1px solid blue;
+        // border: 1px solid blue;
+        @media screen and (max-width: 320px) {
+            width: 50px;
+        }
         width: 30px;
         // height : 100px;
-        @media screen and (max-width: 375px) {
+        @media screen and (min-width: 426px) {
             width: 60px;
             // height : 50px;
         }

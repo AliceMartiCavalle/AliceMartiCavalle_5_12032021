@@ -3,6 +3,7 @@
 //* AFFICHAGE PAGE D'ACCUEIL
 
 let carousel = document.querySelector('#carouselControls > div');
+let newTeddy = document.querySelector('.boxNews > a > img');
 
 async function afficheNounours() {
     console.log('%c AFFICHE NOUNOURS ', fct);
@@ -19,10 +20,13 @@ async function afficheNounours() {
         let newImg = document.createElement("div");
         if (i == 0) {
             newImg.setAttribute("class", "carousel-item active"); 
+        } else if (i == 4) {
+            newTeddy.setAttribute('src', `${data[i].imageUrl}`);
+            newImg.setAttribute("class", "carousel-item"); 
         } else {
             newImg.setAttribute("class", "carousel-item"); 
         }
-        newImg.innerHTML = `<a href="produit.html?id=${data[i]._id}"><img src="${data[i].imageUrl}" class="d-block w-100" alt="Photo de ${data[i].name}, ours en peluche"></a>`
+        newImg.innerHTML = `<a href="produit.html?id=${data[i]._id}"><img src="${data[i].imageUrl}" class="d-block w-100 my-auto" alt="Photo de ${data[i].name}, ours en peluche"></a>`
         carousel.appendChild(newImg)  
     }
     console.log(carousel);
