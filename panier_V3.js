@@ -116,7 +116,6 @@ let prixTag = details[2];
 let descriptionTag = details[3];
 let circle = document.querySelector('.personnaliser > div > svg > circle');
 let small = document.querySelector('.personnaliser > div > small');
-// circle.style.fill = "#C3C3C3";
 //* Par défaut on laisse le cercle de couleur caché
 circle.style.opacity = "0";
 small.style.opacity = "0";
@@ -131,8 +130,8 @@ let options = document.querySelectorAll('#couleurSelect > option');
 function Remplissage(data) {
     console.log('%c REMPLISSAGE ', fct);
 
-    // console.log(i);
     console.log(data);
+
     nom.textContent = data.name;
     imgPeluche.src = data.imageUrl
     codeProduitTag.innerHTML = `<p><em>Code produit : </em>${data._id}</p>`;
@@ -142,10 +141,10 @@ function Remplissage(data) {
     prixTag.innerHTML = `<p><em>Prix : </em>${data.price / 100}€</p>`;    
     
     //* On parcourt les couleurs, pour chaque couleur on remplit une option du select
-    console.log(data.colors.length);
+    // console.log(data.colors.length);
     let couleurSelect = document.querySelector('#couleurSelect');
     couleurSelect.innerHTML = '';
-    console.log(couleurSelect);
+    // console.log(couleurSelect);
     for (let y = 0; y < data.colors.length; y++) { 
         let newOption = document.createElement("option");
         // <option value="1" selected>c1</option>
@@ -155,8 +154,6 @@ function Remplissage(data) {
     }
     
     //* Par défaut on met le select sur la 1ère option
-    // let options = document.querySelectorAll('option');
-    // options[0].setAttribute('selected', 'selected');
     couleurSelect.selectedIndex = 0;
     quantiteSelect.selectedIndex = 0;
 
@@ -171,143 +168,51 @@ function fillCircle(x) {
     small.style.opacity = '0';
 
     let colorsOptions = document.querySelectorAll('#couleurSelect > option');
-    // console.log(colorsOptions[couleurSelect.selectedIndex].textContent);
 
     let circleColor = colorsOptions[couleurSelect.selectedIndex].textContent;
-    // console.log(circleColor.toLowerCase().replace(' ', ''));
     //* Si la couleur n'existe pas (cf colors.js)
     if (colourNameToHex(circleColor.toLowerCase().replace(' ', '')) == false) {
         
         //* Si la couleur dans la base de donnée commence par Pale ou Dark
         if (circleColor.startsWith('Pale')) {
-            // console.log(circleColor);
             //* On convertit le nom en code couleur (cf colors.js)
             circleColor = colourNameToHex(circleColor.replace('Pale ', '').toLowerCase());
-            // console.log(circleColor);
             //* On lighten/darken la couleur (cf colors.js)
             circleColor = LightenDarkenColor(circleColor.replace('#', ''), 30);
-            // console.log(circleColor);
             circleColor = `#${circleColor}`;
             circle.style.fill = circleColor;
-            // circle.style.fill = `#${circleColor}`; //* non : la couleur doit être utilisable directement dans page form
-            // console.log(circle);
+            // circle.style.fill = `#${circleColor}`; //? non : la couleur doit être utilisable directement dans page form
             
         } else if (circleColor.startsWith('Dark')) {
-            // console.log(circleColor);
             circleColor = colourNameToHex(circleColor.replace('Dark ', '').toLowerCase());
-            // console.log(circleColor);
             circleColor = LightenDarkenColor(circleColor.replace('#', ''), -20);
-            // console.log(circleColor);
             circleColor = `#${circleColor}`;
             circle.style.fill = circleColor;
-            // console.log(circle);
         }
     } else if (circleColor == undefined) { //? utile ?
         circle.style.opacity = '0';
         small.style.opacity = '1';
     } else {
-        // console.log(circleColor);
         circle.style.fill = circleColor.replace(' ', '').toLowerCase();
-        // console.log(circle);
     }
     console.log(circleColor);
     return circleColor.replace(' ', '').toLowerCase();
 }
 
-
-const GetOneNounours = async function(thisId) {
-
-    // await fetch(`https://projet-oc-5.herokuapp.com/api/teddies/${thisId}`)
-
-    //     .then((response) => response.json())
-    //     .then((json) => {
-    //         console.log(json);
-    //         Remplissage(json);
-    //         return json;
-    //     })
-    //     .catch((e) => console.error(e.stack))
-    console.log(thisId);
-    const res = await fetch(`https://projet-oc-5.herokuapp.com/api/teddies/${thisId}`);
-    const data = await res.json();
-    return data;
-       
-}
-// GetOneNounours();
-
 //* On remplit la page avec les infos des nounours
 async function Affichage() {
+    console.log('%c AFFICHAGE ', fct)
     console.log(location.search.replace('?id=', ''));
-
-    // let myNours = await GetOneNounours(location.search.replace('?id=', ''));
-    // console.log(myNours);
 
     //* Si l'utilisateur a cliqué sur peluches dans nav
     if (location.search == '') {
         //* On affiche norbert par défaut
-        // GetOneNounours('5be9c8541c9d440000665243');
-        // let myNours = await GetOneNounours('5be9c8541c9d440000665243');
-        // console.log('%cmyNours', vrb, myNours)
         Remplissage(await GetOneNounours('5be9c8541c9d440000665243'))
     } else {
         //* On affiche la peluche en fonction de l'id
-        // GetOneNounours(location.search.replace('?id=', ''));
-        // let myNours = await GetOneNounours(location.search.replace('?id=', ''));
-        // console.log('%cmyNours', vrb, myNours)
         Remplissage(await GetOneNounours(location.search.replace('?id=', '')))
-    }
-    
-   
+    } 
 
-    //! fonctionne
-    // //* on attend d'avoir récupéré les infos nounours
-    // await GetNounours();
-    // console.log(data);
-    // // let i = 0;
-    // let i;
-    // //* On parcourt les infos renvoyées par fetch
-    // for (let z = 0; z < data.length; z++) {
-    //     //* On affiche les peluches en fonction du location hash
-    //     // console.log()
-    //     //* Si location.hash = id de la peluche
-    //     if (location.hash === `#${data[z]._id}`) {
-    //         console.log('hash = id')
-    //         i = z
-    //         Remplissage(z);
-    //         //* Si utilisateur a cliqué peluche dans nav, on affiche Norbert par défaut
-    //     } else if (location.hash === '' || location.hash === '#popover') { //* si on actualise la page
-    //         console.log('hash = vide || popover') 
-    //         i = 0;
-    //         Remplissage(i);
-    //     } else {
-    //         console.log('Ce n\'est pas le nounours que vous recherchez');
-    //     }
-    // }
-    //! jusqu'ici
-
-    // await NavImg();
-    // let imgNavPeluche = document.querySelectorAll('#imgNavPeluche > div > img');
-    // console.log(imgNavPeluche);
-    // console.log(imgNavPeluche[0]);
-    // //* Si l'utilisateur clique sur une autre peluche, on l'affiche
-    // let data = await GetNounours();
-    // // await GetNounours();
-    // console.log(data);
-    // //? What the fuck is happening here 
-    // // let i = 0;
-    // for (y = 0; y <= data.length; y++) {
-    //     // console.log(i);
-    //     (function(arg) {
-    //         imgNavPeluche[y].addEventListener('click', function() {
-    //             console.log('% btn img nav peluche', btn);
-    //             console.log(arg);
-    //             console.log(y);
-    //             // i = arg;
-    //             Remplissage(y);
-    //         }, false);
-    //         console.log(arg); // s'incrémente
-    //         // i = arg;
-    //     })(y);
-    // }
 }
 Affichage();
 
@@ -322,48 +227,31 @@ let quantite = 0;
 //* Quand l'utilisateur choisi une quantité dans le select
 quantiteSelect.addEventListener('change', function() {
     quantite = quantiteSelect.selectedIndex + 1; //* pour que index = quantite
-    console.log(quantite);
+    console.log('%cquantité', vrb, quantite);
     //* S'il choisit l'option 4, on affiche le toast
     if (quantite == 4) {
-        // alert("Vous allez acheter 10 nounours : 9 + 1 gratuit !");
         // toast.setAttribute('data-autohide', 'false'); //? why
         toast.setAttribute('class', 'toast show');
         toast.dataset.autohide = 'false';
-        // console.log(toast);
     }
 });
 
 //* récupérer emplacement couleurs
 let couleurSelect = document.getElementById('couleurSelect');
 let couleur = 0; //* pour choix par défaut dans le select
-// let colorsOptions = document.querySelectorAll('#couleurSelect > option');
-// console.log(colorsOptions[couleur].textContent);
 
 //* Quand l'utilisateur choisit une couleur dans le select
 couleurSelect.addEventListener('change', function(e) {
 
-    console.log(e.target.value); // +1 car dans html va de 1 à 4
-    // console.log(e.target.value);
+    console.log('%ce.target.value', vrb, e.target.value); // +1 car dans html va de 1 à 4 // why ? I fucking forgot, just leave it
     let colorsOptions = document.querySelectorAll('#couleurSelect > option');
 
-    // couleur = couleurSelect.selectedIndex;
-    // console.log(colorsOptions[2].textContent);
-    // console.log(couleur);
-    console.log(colorsOptions[e.target.value -1].textContent);
+    // console.log(colorsOptions[e.target.value -1].textContent);
 
     //* On remplit le cercle svg en fonction de la couleur
     fillCircle(colorsOptions[e.target.value -1].textContent);
     
 });
-
-// async function fillCircleDefault() {
-//     await GetNounours();
-//     circle.style.opacity = '0';
-//     small.style.opacity = '1';
-//     fillCircle();
-// }
-// fillCircleDefault();
-
 
 
 //* footer carte et icones du footer carte pour interaction utilisateur (eventListener)
@@ -371,15 +259,12 @@ let iconesPanier = document.querySelectorAll("#footerPeluche > svg");
 let iconeLight = iconesPanier[0];
 let iconeDark = iconesPanier[1]
 
-// let footerPeluche = document.getElementById('footerPeluche');
 
 //* On vérifie si l'utilisateur a déjà des nounours dans local storage,
 //* Si non on initialise choixNounoursTab avec un tableau vide
 let choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab")) || [];
 console.log(choixNounoursTab)
-// let choixNounoursTab = [];
 localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
-// console.log(JSON.parse(localStorage.getItem("choixNounoursTab")));
 
 //// Si l'utilisateur a déjà une commande en cours
 let quantitePanier = 0;
@@ -401,12 +286,13 @@ lienPanier.style.opacity = '0';
 
 //* Met le badge à jour dans la nav
 function UpdateBadge(quantite) {
+    console.log('%c UPDATE BADGE', fct)
     let contentBadge = parseInt(badge.textContent);
-    // console.log(contentBadge);
-    console.log(quantite);
+
+    // console.log(quantite);
     if (quantite == 9) {
         quantite += 1;
-        console.log(quantite);
+        // console.log(quantite);
     }
 
     if (isNaN(contentBadge)) {
@@ -418,68 +304,57 @@ function UpdateBadge(quantite) {
 
 //* Met à jour le popover au-dessus de l'icône cart dans le footer de la card
 function UpdatePopover(quantite) {
-     //* permet d'initialiser le popover
-     $('[data-toggle="popover"]').popover(); //* ici pour pas avoir inutilement un popover vide
-     let contentPopover = parseInt(popover.dataset.content);
-     console.log(contentPopover);
-     // console.log(contentPopover);
-     //* Si le popover est vide parce que c'est la première peluche
-     if (isNaN(contentPopover)) {
-         popover.setAttribute('data-content', `${quantite}`);
-         // popover.dataset.content = quantite;
-         console.log(quantite);
+    console.log('%c UPDATE POPOVER ', fct);
+
+    //* permet d'initialiser le popover
+    $('[data-toggle="popover"]').popover(); //* ici pour pas avoir inutilement un popover vide
+    let contentPopover = parseInt(popover.dataset.content);
+    console.log(contentPopover);
+
+    //* Si le popover est vide parce que c'est la première peluche
+    if (isNaN(contentPopover)) {
+        popover.setAttribute('data-content', `${quantite}`);
+        console.log(quantite);
     //* Si l'utilisateur a déjà ajouté des peluches au panier
-     } else {
-         // popover.setAttribute('data-content', `${(quantite + contentPopover)}`);
-         popover.dataset.content = quantite + contentPopover;
-         console.log(quantite);
-     }
-     //* On montre le popover que 1 seconde, sinon le contenu s'actualise pas
-     $("[data-toggle='popover']").popover('show');
-     setTimeout(function() {
-         $("[data-toggle='popover']").popover('hide');
-     }, 1000)
+    } else if (quantite == 9) {
+        
+        popover.dataset.content = (quantite + 1) + contentPopover;
+        console.log(quantite);
+    } else {
+        popover.dataset.content = quantite + contentPopover;
+        console.log(quantite);
+    }
+    //* On montre le popover que 1 seconde, sinon le contenu s'actualise pas
+    $("[data-toggle='popover']").popover('show');
+    setTimeout(function() {
+        $("[data-toggle='popover']").popover('hide');
+    }, 1000)
 }
 
 let numLigneCommande = JSON.parse(localStorage.getItem("numLigneCommande")) || 0;
 console.log(numLigneCommande);
 //* Récupère les choix de l'utilisateur et les stock dans local storage
 async function Panier() {
-    
+    console.log('%c PANIER ', fct)
     //* on ajoute le choix de l'utilisateur au panier :
 
-    //* couleur
     let choixNounours = [];
+
+    //* couleur
     console.log(couleur);
     let options = document.querySelectorAll('#couleurSelect > option');
     console.log(options[couleurSelect.selectedIndex].textContent);
 
     choixNounours.push(options[couleurSelect.selectedIndex].textContent)
-    // console.log(options[0]);
-    // switch (couleur) {
-    //     case 0:
-    //         choixNounours.push(`${options[0].textContent}`); //*choix par défaut
-    //         break;
-    //     case 1:
-    //         choixNounours.push(`${options[1].textContent}`);
-    //         break;
-    //     case 2:
-    //         choixNounours.push(`${options[2].textContent}`);
-    //         break;
-    //     case 3:
-    //         choixNounours.push(`${options[3].textContent}`);
-    //         break;
-    //     default:
-    //         console.log('error couleur')
-    //         break;
-    // }
+
     console.log('couleur : ' + choixNounours);
     
+    //* quantite
     console.log(quantite)
     console.log(quantiteSelect);
     console.log(quantiteSelect.selectedIndex);
     if (quantiteSelect.selectedIndex == 3) {
-        choixNounours.push('10'); 
+        choixNounours.push(parseInt('10')); 
         quantite = 9; //*car 1 gratuit
     } else {
         choixNounours.push(quantiteSelect.selectedIndex + 1);
@@ -487,28 +362,6 @@ async function Panier() {
         console.log(quantite)
     }
     console.log(quantite)
-    // switch (quantite) { //*quantite = index du select + 1
-    //     case 0:
-    //         choixNounours.push('1'); //* quantité par défaut
-    //         quantite = 1;
-    //         break;
-    //     case 1:
-    //         choixNounours.push('1');
-    //         break;
-    //     case 2:
-    //         choixNounours.push('2');
-    //         break;
-    //     case 3:
-    //         choixNounours.push('3');
-    //         break;
-    //     case 4:
-    //         choixNounours.push('10'); 
-    //         quantite = 9; //*car 1 gratuit
-    //         break;
-    //     default:
-    //         console.log('error quantite')
-    //         break;
-    // }
 
     console.log('couleur + quantite :' + choixNounours);
 
@@ -518,12 +371,7 @@ async function Panier() {
 
     UpdatePopover(quantite);
     
-    //* on convertit quantité en number pour faire des calculs et on calcul prix
-    // quantite = parseInt(quantite);
-    // console.log(quantite);
-
-    //* On rentabilise fetch
-    // console.log(data[0].id);
+    //* On rentabilise fetch en cherchant le nours par son nom
     console.log(nom);
     let data = await GetNounours();
     console.log(data);
@@ -539,18 +387,12 @@ async function Panier() {
         }
     }
     console.log(prix, codeProduit, description);
-
-    // let thisNounoursTab 
-    //* trouver une solution moins barbare
-    // console.log(prixTag.innerHTML);
-    // let prix = JSON.stringify(prixTag.innerHTML);
-    // prix = prix.replace(/<\/?[^>]+(>|$)/g, "");
-    // prix = prix.split(': ');
-    // prix = prix[1][0] + prix[1][1];
-    // prix = parseInt(prix);
-    // console.log(prix);
     
-    total = prix *  parseInt(quantite) + "€";
+    if (quantite == 9) {
+        total = prix * (parseInt(quantite) + 1) + "€";
+    } else {
+        total = prix * parseInt(quantite) + "€";
+    }
     console.log(total);
 
     //* On garde que la partie id
@@ -559,53 +401,44 @@ async function Panier() {
     // codeProduit = codeProduit[1];
     // console.log(codeProduit);
     
-    //* Idem pour la description
-    // let description = descriptionTag.textContent;
-    // description = description.split(' : ');
-    // description = description[1];
-    // console.log(description);
-    
     //* on ajoute les autres infos au tableau
     let circleColor = fillCircle();
     console.log(circleColor);
-    // let codeProduit = thisNounours()[1];
-    // let description = thisNounours()[2];
+
     numLigneCommande += 1
     localStorage.setItem("numLigneCommande", JSON.stringify(numLigneCommande));
     choixNounours.push(codeProduit, nom.textContent, total, description, imgPeluche.src, circleColor, numLigneCommande);
+    
     console.log(choixNounours);
-
-    // //* On envoie/récupère les infos nounours sur local storage
-    // localStorage.setItem("choixNounours", JSON.stringify(choixNounours));
-    // let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
-    // console.log(retrievedChoixNounours); // tes variables sont un peu longues, Alice // Au moins c'est parlant quoi
 
     //* Si l'utilisateur achète plusieurs nounours d'un coup
     console.log(JSON.parse(localStorage.getItem("choixNounoursTab")));
+
     //* on récupère tableau vide de commande
     choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
     console.log(choixNounoursTab);
-    // retrievedChoixNounoursTab.unshift('un nounours test');
-    // console.log(retrievedChoixNounoursTab);
+
     //* on ajoute choixNounours
     choixNounoursTab.unshift(choixNounours);
     console.log(choixNounoursTab);
-    // retrievedChoixNounoursTab.unshift('un 2e nounours test');
+
     //* On envoie le tableau de commande sur local storage qui contient un nouveau nounours
     //* A chaque tour, on ajoute un nounours
     localStorage.setItem("choixNounoursTab", JSON.stringify(choixNounoursTab));
+
+    // On vérifie que ça fonctionne //? utile
     choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
     console.log(choixNounoursTab);
 }
 
-async function AddToPanier() {     
-    await Affichage();
-    //* Quand on clique sur l'icone panier de la card
-    //? iconeLight.addEventListener('click', function() { //? pourquoi fonctionne pas ici ? //on s'en fout, ça fonctionne globalement
-    popover.addEventListener('click', function() {
-        //* on passe de icone light à icone dark
-        //! finalement en css, supprimer tout le code lié
+async function AddToPanier() {    
+    console.log('%c ADD TO PANIER ', fct);
 
+    await Affichage();
+
+    //* Quand on clique sur l'icone panier de la card
+    popover.addEventListener('click', function() { //popover, c'est le <a></a> autour des icones
+        
         //* On affiche un lien vers le panier dans le footer de la card
         lienPanier.style.opacity = '1';
 
@@ -615,10 +448,9 @@ async function AddToPanier() {
 
     let buttonToast = document.querySelector('.buttonToast')
 
+    //* Si l'utilisateur clique ok sur toast, on ajoute direct au panier
     buttonToast.addEventListener('click', function() {
-        //* on passe de icone light à icone dark
-        //! finalement en css, supprimer tout le code lié
-
+        
         //* On affiche un lien vers le panier dans le footer de la card
         lienPanier.style.opacity = '1';
 
@@ -627,158 +459,4 @@ async function AddToPanier() {
     }); 
 }
 AddToPanier();
-
-
-
-    //! truc à supprimer quand j'aurai une meilleure solution
-//     buttonToast.addEventListener("click", function () {
-//         let choixNounours = [];
-//         console.log(couleur);
-//         console.log(options);
-//         switch (couleur) {
-//             case 0:
-//                 choixNounours.push(`${options[0].textContent}`); //choix par défaut
-//                 break;
-//             case 1:
-//                 choixNounours.push(`${options[1].textContent}`);
-//                 break;
-//             case 2:
-//                 choixNounours.push(`${options[2].textContent}`);
-//                 break;
-//             case 3:
-//                 choixNounours.push(`${options[3].textContent}`);
-//                 break;
-//             default:
-//                 console.log("error couleur");
-//                 break;
-//         }
-//         console.log("couleur : " + choixNounours);
-
-//         switch (
-//             quantite //*quantite = index du select + 1
-//         ) {
-//             case 0:
-//                 choixNounours.push("1"); //* quantité par défaut
-//                 quantite = 1;
-//                 break;
-//             case 1:
-//                 choixNounours.push("1");
-//                 break;
-//             case 2:
-//                 choixNounours.push("2");
-//                 break;
-//             case 3:
-//                 choixNounours.push("3");
-//                 break;
-//             case 4:
-//                 choixNounours.push("10");
-//                 quantite = 9; //*car 1 gratuit
-//                 break;
-//             default:
-//                 console.log("error quantite");
-//                 break;
-//         }
-
-//         console.log("couleur + quantite :" + choixNounours);
-
-//         //* On indique au niveau de la nav qu'un truc a été ajouté au panier
-//         //! penser à vider le badge après la confirmation de commande
-//         let contentBadge = parseInt(badge.textContent);
-//         // console.log(contentBadge);
-//         console.log(quantite);
-//         if (quantite == 9) {
-//             quantite += 1;
-//             console.log(quantite);
-//         }
-
-//         if (isNaN(contentBadge)) {
-//             badge.innerHTML = `${quantite}`;
-//         } else {
-//             badge.innerHTML = `${quantite + contentBadge}`;
-//         }
-
-//         //* permet d'initialiser le popover
-//         $('[data-toggle="popover"]').popover(); // ici pour pas avoir inutilement un popover vide
-//         let contentPopover = parseInt(popover.dataset.content);
-//         console.log(contentPopover);
-//         // console.log(contentPopover);
-//         if (isNaN(contentPopover)) {
-//             popover.setAttribute("data-content", `${quantite}`);
-//             // popover.dataset.content = quantite;
-//             console.log(quantite);
-//         } else {
-//             // popover.setAttribute('data-content', `${(quantite + contentPopover)}`);
-//             popover.dataset.content = quantite + contentPopover;
-//             console.log(quantite);
-//         }
-
-//         //* on convertit quantité en number pour faire des calculs et on calcul prix
-//         quantite = parseInt(quantite);
-//         console.log(quantite);
-
-//         //* trouver une solution moins barbare
-//         console.log(prixTag.innerHTML);
-//         let prix = JSON.stringify(prixTag.innerHTML);
-//         prix = prix.replace(/<\/?[^>]+(>|$)/g, "");
-//         prix = prix.split(": ");
-//         prix = prix[1][0] + prix[1][1];
-//         prix = parseInt(prix);
-//         console.log(prix);
-
-//         total = prix * quantite + "€";
-//         console.log(total);
-
-//         //* On garde que la partie id
-//         let codeProduit = codeProduitTag.textContent;
-//         codeProduit = codeProduit.split(" : ");
-//         codeProduit = codeProduit[1];
-//         console.log(codeProduit);
-
-//         //* Idem pour la description
-//         let description = descriptionTag.textContent;
-//         description = description.split(" : ");
-//         description = description[1];
-//         console.log(description);
-
-//         //* on ajoute les autres infos au tableau
-//         choixNounours.push(
-//             codeProduit,
-//             nom.textContent,
-//             total,
-//             description,
-//             imgPeluche.src
-//         );
-//         console.log(choixNounours);
-
-//         // //* On envoie/récupère les infos nounours sur local storage
-//         // localStorage.setItem("choixNounours", JSON.stringify(choixNounours));
-//         // let retrievedChoixNounours= JSON.parse(localStorage.getItem("choixNounours"));
-//         // console.log(retrievedChoixNounours); // tes variables sont un peu longues, Alice // Au moins c'est parlant quoi
-
-//         //* Si l'utilisateur achète plusieurs nounours d'un coup
-//         console.log(JSON.parse(localStorage.getItem("choixNounoursTab")));
-//         //* on récupère tableau vide de commande
-//         choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
-//         console.log(choixNounoursTab);
-//         // retrievedChoixNounoursTab.unshift('un nounours test');
-//         // console.log(retrievedChoixNounoursTab);
-//         //* on ajoute choixNounours
-//         choixNounoursTab.unshift(choixNounours);
-//         console.log(choixNounoursTab);
-//         // retrievedChoixNounoursTab.unshift('un 2e nounours test');
-//         //* On envoie le tableau de commande sur local storage qui contient un nouveau nounours
-//         //* A chaque tour, on ajoute un nounours
-//         localStorage.setItem(
-//             "choixNounoursTab",
-//             JSON.stringify(choixNounoursTab)
-//         );
-//         choixNounoursTab = JSON.parse(localStorage.getItem("choixNounoursTab"));
-//         console.log(choixNounoursTab);
-//     }); 
-//     //! FIN truc à supprimer quand j'aurai une meilleure solution
-// }
-// panier();
-
-
-// localStorage.clear();
 

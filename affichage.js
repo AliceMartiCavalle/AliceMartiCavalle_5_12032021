@@ -11,9 +11,9 @@ async function afficheNounours() {
     let data = await GetNounours();
 
     console.log(data);
-    
+
     //* On remplit avec les img renvoyées par l'API
-    console.log(data[0].imageUrl);
+    // console.log(data[0].imageUrl);
     for (let i = 0; i < data.length; i++) {
         // imgs[i].src = data[i].imageUrl
         let newImg = document.createElement("div");
@@ -41,8 +41,8 @@ if (choixNounoursTab != null) {
     let quantiteTotale = 0;
     for (let i = 0; i < choixNounoursTab.length; i++) {
         quantiteTotale += parseInt(choixNounoursTab[i][1]);
-        console.log(quantiteTotale);
     }
+    console.log(quantiteTotale);
     
     //* BOOTSTRAP_BADGE : On remet le badge sur le panier
     let badge = document.querySelector('.badge');

@@ -12,28 +12,26 @@ let quantiteTotale;
 let total;
 
 function GetPrixPerUnite() {
-    //* Un petit calcul pour éviter au navigateur de repasser sur GETinfosNounours
-    //? Un fois que j'aurai compris comment on sort ces putains d'infos de ces saloperies de fetch, peut-être que je ferai autrement
+    console.log('%c GET PRIX PER UNITE ', fct);
     let prixUniteTab = [];
     //* On parcourt le tableau avec les nounours
     for (let i = 0; i < choixNounoursTab.length; i++) {
         //* On récupère le prix, la quantité de chaque nounours
-        console.log(i);
         let prix = choixNounoursTab[i][4];
         console.log(prix);
         let quantite = choixNounoursTab[i][1];
         console.log(quantite);
         //* On calcule le prix unitaire de chaque nounours et on le stock dans prixUniteTab
         let prixUnite = parseInt(prix) / parseInt(quantite);
-        console.log(prixUnite);
+        // console.log(prixUnite);
         prixUniteTab.push(prixUnite);
-        console.log(prixUniteTab);
     }
     console.log(prixUniteTab);
     return prixUniteTab;
 }
 
 function CreateCommandeLines(prixUniteTab) {
+    console.log('%c CREATE COMMANDE LINE ', fct)
     let commandeTab = [];
     let commandeAll = document.getElementById('commandeAll');
     //* On ajoute des lignes de commandes en fonction du nombre de nounours
@@ -50,51 +48,34 @@ function CreateCommandeLines(prixUniteTab) {
         let newCommandeImgDiv = newCommandeDiv[0];
         newCommandeImgDiv.setAttribute("class", "col-2");
         let newCommandeImg = newCommandeImgDiv.querySelector("img");
-        // console.log(newCommandeImg);
         newCommandeImg.setAttribute("src", choixNounoursTab[i][6]);
         newCommandeImg.setAttribute("class", "imgCommande");
-        console.log(newCommandeImgDiv);
+        // console.log(newCommandeImgDiv);
         
         //* nom
         let newCommandeNom = newCommandeDiv[1];
         newCommandeNom.setAttribute("class", "col-3 d-flex align-items-center");
         newCommandeNom.innerHTML = `<strong>Nom : &nbsp;</strong>${choixNounoursTab[i][3]}`;
-        console.log(newCommandeNom);
+        // console.log(newCommandeNom);
         
         //* prix
         console.log(prixUniteTab);
         let newCommandePrix = newCommandeDiv[2];
         newCommandePrix.setAttribute("class", "col-3 d-flex align-items-center");
         newCommandePrix.innerHTML = `<strong>Prix : &nbsp;</strong>${choixNounoursTab[i][1]} x ${prixUniteTab[i]}€ = ${choixNounoursTab[i][4]}`;
-        console.log(newCommandePrix);
+        // console.log(newCommandePrix);
        
         //* couleur
         let newCommandeCouleur = newCommandeDiv[3];
         newCommandeCouleur.setAttribute("class", "col-2 d-flex align-items-center");
         newCommandeCouleur.innerHTML = `<strong>Couleur : &nbsp;</strong>${choixNounoursTab[i][0]}`;
-        console.log(newCommandeCouleur);
+        // console.log(newCommandeCouleur);
         
         //* svg couleur
-        // <div class="col-1">
-        //     <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" class="ml-2">
-        //         <circle cx="5" cy="5" r="4" fill="none" stroke="black" stroke-width="3%" />
-        //     </svg>
-        // </div>
         let newCommandeSvg = newCommandeDiv[4];
         newCommandeSvg.setAttribute("class", "col-1 d-flex align-items-center circle");
-        // let color;
-        // console.log(choixNounoursTab[i][0]);
-        // for (let y = 0; y < colors.length; y++) {
-        //     console.log(colors[y].name);
-        //     if (choixNounoursTab[i][0] == colors[y].name) {
-        //         console.log('fill couleur')
-        //         // circle.style.fill = colors[i].color;
-        //         color = colors[y].color;
-        //         console.log(color);
-        //     }
-        // }
         newCommandeSvg.innerHTML = `<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="4" stroke="black" stroke-width="3%" fill="${choixNounoursTab[i][7]}"/></svg>`;
-        console.log(newCommandeSvg);
+        // console.log(newCommandeSvg);
        
         //* icone poubelle
         let newCommandeIcon = newCommandeDiv[5];
@@ -113,26 +94,13 @@ function CreateCommandeLines(prixUniteTab) {
 }
 
 function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
-    console.log('CREATE DELETE EVENT BIN');
-    //! exemple
-    // for (y = 0; y <= data.length; y++) {
-    //     console.log(i);
-    //     (function(arg) {
-    //         imgNavPeluche[i].addEventListener('click', function() {
-    //             console.log(arg);
-    //             i = arg - 1;
-    //             console.log(i);
-    //         }, false);
-    //         console.log(arg); // s'incrémente
-    //         i = arg;
-    //     })(y);
-    // }
-    //! fin exemple
+    console.log('%c CREATE DELETE EVENT BIN', fct);
+
     //* On repère les bins dans html
     let binAll = document.querySelectorAll(".bin")
     console.log(binAll);
     for (let i = 0; i < binAll.length; i++) {
-        console.log(i);
+        // console.log(i);
         (function(arg) {
             binAll[i].addEventListener('click', function(e) {
 
@@ -146,7 +114,7 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
                 console.log(arg);
                 console.log(i);
                 
-                console.log('BIN');
+                console.log('%c BIN', btn);
                 console.log(binAll[i]);
                 console.log(choixNounoursTab);
                 //? il faut chercher dans choixNounoursTab le nounours par nom
@@ -156,8 +124,8 @@ function CreateDeleteEventBin(commandeTab, badge, totalDiv) {
 
                 // tab.filter(item => {return item})
                 let noursDelete = choixNounoursTab.filter(nours => {
-                    console.log(nours[8])
-                    return nours[8] == commandeTab[i].numDeLigne
+                    console.log(nours[8]);
+                    return nours[8] == commandeTab[i].numDeLigne;
                     // return nours == nom+quantite
                 })
                 console.log(noursDelete);
